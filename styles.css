@@ -1,8 +1,5 @@
-﻿/* ==========================================
-   �齱ϵͳ - �ִ��ſ�����ʽ
-   ========================================== */
+﻿/* 抽奖系统 - 现代炫酷风格样式 */
 
-/* CSS�������� */
 :root {
     --primary: #667eea;
     --primary-dark: #5a67d8;
@@ -23,7 +20,6 @@
     --danger: #ef4444;
 }
 
-/* �������� */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -44,7 +40,6 @@ body {
     position: relative;
 }
 
-/* ���ӱ������� */
 #particles {
     position: fixed;
     top: 0;
@@ -55,7 +50,6 @@ body {
     pointer-events: none;
 }
 
-/* ������ */
 .container {
     position: relative;
     z-index: 1;
@@ -67,9 +61,6 @@ body {
     margin: 0 auto;
 }
 
-/* ==========================================
-   ͷ������
-   ========================================== */
 .header {
     text-align: center;
     padding: 30px 20px 40px;
@@ -132,9 +123,6 @@ body {
     margin-top: 10px;
 }
 
-/* ==========================================
-   ����������
-   ========================================== */
 .main-content {
     display: grid;
     grid-template-columns: 1fr 1.5fr 1fr;
@@ -143,7 +131,6 @@ body {
     padding: 20px 0;
 }
 
-/* ͨ������ͷ�� */
 .section-header {
     margin-bottom: 20px;
 }
@@ -174,9 +161,6 @@ body {
     font-size: 1.4rem;
 }
 
-/* ==========================================
-   ��Ʒչʾ��
-   ========================================== */
 .prizes-section {
     background: var(--bg-glass);
     border-radius: 24px;
@@ -246,7 +230,7 @@ body {
 }
 
 .prize-card.depleted::after {
-    content: '�ѳ���';
+    content: '已抽完';
     position: absolute;
     top: 50%;
     left: 50%;
@@ -316,9 +300,6 @@ body {
     color: var(--success);
 }
 
-/* ==========================================
-   �齱������
-   ========================================== */
 .lottery-section {
     display: flex;
     flex-direction: column;
@@ -581,7 +562,6 @@ body {
     opacity: 0.5;
 }
 
-/* ��ǰ�н���չʾ */
 .current-winner {
     width: 100%;
     max-width: 500px;
@@ -632,9 +612,6 @@ body {
     color: var(--text-secondary);
 }
 
-/* ==========================================
-   �н�������
-   ========================================== */
 .winners-section {
     background: var(--bg-glass);
     border-radius: 24px;
@@ -753,9 +730,6 @@ body {
     flex-shrink: 0;
 }
 
-/* ==========================================
-   �ײ�����
-   ========================================== */
 .footer {
     display: flex;
     justify-content: space-between;
@@ -815,9 +789,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* ==========================================
-   ȫ����ף��Ч
-   ========================================== */
 .celebration-overlay {
     position: fixed;
     top: 0;
@@ -932,9 +903,6 @@ body {
     box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
 }
 
-/* ==========================================
-   ��Ӧʽ���
-   ========================================== */
 @media (max-width: 1200px) {
     .main-content {
         grid-template-columns: 1fr;
@@ -1013,9 +981,6 @@ body {
     }
 }
 
-/* ==========================================
-   ��Ч��������
-   ========================================== */
 .confetti {
     position: absolute;
     width: 10px;
@@ -1034,7 +999,6 @@ body {
     }
 }
 
-/* ����ѡ�� */
 .draw-button,
 .prize-card,
 .winner-card {

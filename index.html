@@ -3,40 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>�齱ϵͳ - 2026��ȳ齱ʢ��</title>
+    <title>抽奖系统 - 2026年度抽奖盛典</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- ��������Ч�� -->
     <canvas id="particles"></canvas>
     
-    <!-- ������ -->
     <div class="container">
-        <!-- ͷ�������� -->
         <header class="header">
             <div class="logo-container">
                 <div class="logo-glow"></div>
                 <h1 class="title">
-                    <span class="title-text">2026��ȳ齱ʢ��</span>
+                    <span class="title-text">2026年度抽奖盛典</span>
                     <span class="title-sub">LUCKY DRAW</span>
                 </h1>
             </div>
         </header>
 
-        <!-- �������� -->
         <main class="main-content">
-            <!-- ��ཱƷչʾ�� -->
             <section class="prizes-section">
                 <div class="section-header">
-                    <h2><span class="icon">?</span> ��Ʒչʾ</h2>
+                    <h2><span class="icon">🎁</span> 奖品展示</h2>
                 </div>
-                <div class="prizes-grid" id="prizesGrid">
-                    <!-- ��Ʒ��Ƭ����JS��̬���� -->
-                </div>
+                <div class="prizes-grid" id="prizesGrid"></div>
             </section>
 
-            <!-- �м�齱�� -->
             <section class="lottery-section">
                 <div class="lottery-machine">
                     <div class="machine-top">
@@ -51,20 +43,18 @@
                     
                     <div class="display-screen">
                         <div class="screen-inner" id="displayScreen">
-                            <div class="waiting-text">׼���齱</div>
+                            <div class="waiting-text">准备抽奖</div>
                         </div>
                     </div>
 
                     <div class="prize-selector">
-                        <label for="prizeSelect">ѡ���</label>
-                        <select id="prizeSelect" class="prize-select">
-                            <!-- ѡ����JS��̬���� -->
-                        </select>
-                        <span class="remaining" id="remainingCount">ʣ��: 0</span>
+                        <label for="prizeSelect">选择奖项：</label>
+                        <select id="prizeSelect" class="prize-select"></select>
+                        <span class="remaining" id="remainingCount">剩余: 0</span>
                     </div>
 
                     <button class="draw-button" id="drawButton">
-                        <span class="button-text">��ʼ�齱</span>
+                        <span class="button-text">开始抽奖</span>
                         <span class="button-glow"></span>
                     </button>
 
@@ -73,12 +63,11 @@
                     </div>
                 </div>
 
-                <!-- ��ǰ�н���չʾ -->
                 <div class="current-winner" id="currentWinner">
                     <div class="winner-card hidden">
                         <div class="confetti-container"></div>
                         <div class="winner-content">
-                            <div class="winner-badge">? ��ϲ�н� ?</div>
+                            <div class="winner-badge">🎉 恭喜中奖 🎉</div>
                             <div class="winner-name" id="winnerName"></div>
                             <div class="winner-prize" id="winnerPrize"></div>
                         </div>
@@ -86,54 +75,51 @@
                 </div>
             </section>
 
-            <!-- �Ҳ��н������� -->
             <section class="winners-section">
                 <div class="section-header">
-                    <h2><span class="icon">?</span> �н�����</h2>
+                    <h2><span class="icon">🏆</span> 中奖名单</h2>
                 </div>
                 <div class="winners-list" id="winnersList">
-                    <div class="empty-list">�����н���¼</div>
+                    <div class="empty-list">暂无中奖记录</div>
                 </div>
             </section>
         </main>
 
-        <!-- �ײ���������Ϣ -->
         <footer class="footer">
             <div class="participants-info">
                 <span class="info-item">
-                    <span class="info-icon">?</span>
-                    ��������: <strong id="totalParticipants">0</strong>
+                    <span class="info-icon">👥</span>
+                    参与人数: <strong id="totalParticipants">0</strong>
                 </span>
                 <span class="info-item">
-                    <span class="info-icon">?</span>
-                    ʣ������: <strong id="remainingParticipants">0</strong>
+                    <span class="info-icon">✨</span>
+                    剩余人数: <strong id="remainingParticipants">0</strong>
                 </span>
                 <span class="info-item">
-                    <span class="info-icon">?</span>
-                    ���н�: <strong id="winnersCount">0</strong>
+                    <span class="info-icon">🎯</span>
+                    已中奖: <strong id="winnersCount">0</strong>
                 </span>
             </div>
             <button class="reset-button" id="resetButton">
-                <span>?</span> ���ó齱
+                <span>🔄</span> 重置抽奖
             </button>
         </footer>
     </div>
 
-    <!-- ȫ���н���Ч�� -->
     <div class="celebration-overlay" id="celebrationOverlay">
         <div class="celebration-content">
             <div class="big-winner-card">
                 <div class="sparkle-ring"></div>
-                <div class="winner-avatar" id="bigWinnerAvatar">?</div>
+                <div class="winner-avatar" id="bigWinnerAvatar">🎊</div>
                 <div class="winner-details">
-                    <div class="congrats-text">��ϲ</div>
+                    <div class="congrats-text">恭喜</div>
                     <div class="big-winner-name" id="bigWinnerName"></div>
                     <div class="prize-won">
-                        <span>���</span>
+                        <span>获得</span>
                         <span class="prize-name" id="bigPrizeName"></span>
                     </div>
                 </div>
-                <button class="close-celebration" id="closeCelebration">ȷ��</button>
+                <button class="close-celebration" id="closeCelebration">确认</button>
             </div>
         </div>
     </div>
