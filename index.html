@@ -1,42 +1,42 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>³é½±ÏµÍ³ - 2026Äê¶È³é½±Ê¢µä</title>
+    <title>ï¿½é½±ÏµÍ³ - 2026ï¿½ï¿½È³é½±Ê¢ï¿½ï¿½</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- ±³¾°Á£×ÓÐ§¹û -->
+    <!-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ -->
     <canvas id="particles"></canvas>
     
-    <!-- Ö÷ÈÝÆ÷ -->
+    <!-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -->
     <div class="container">
-        <!-- Í·²¿±êÌâÇø -->
+        <!-- Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -->
         <header class="header">
             <div class="logo-container">
                 <div class="logo-glow"></div>
                 <h1 class="title">
-                    <span class="title-text">2026Äê¶È³é½±Ê¢µä</span>
+                    <span class="title-text">2026ï¿½ï¿½È³é½±Ê¢ï¿½ï¿½</span>
                     <span class="title-sub">LUCKY DRAW</span>
                 </h1>
             </div>
         </header>
 
-        <!-- Ö÷ÄÚÈÝÇø -->
+        <!-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -->
         <main class="main-content">
-            <!-- ×ó²à½±Æ·Õ¹Ê¾Çø -->
+            <!-- ï¿½ï¿½à½±Æ·Õ¹Ê¾ï¿½ï¿½ -->
             <section class="prizes-section">
                 <div class="section-header">
-                    <h2><span class="icon">?</span> ½±Æ·Õ¹Ê¾</h2>
+                    <h2><span class="icon">?</span> ï¿½ï¿½Æ·Õ¹Ê¾</h2>
                 </div>
                 <div class="prizes-grid" id="prizesGrid">
-                    <!-- ½±Æ·¿¨Æ¬½«ÓÉJS¶¯Ì¬Éú³É -->
+                    <!-- ï¿½ï¿½Æ·ï¿½ï¿½Æ¬ï¿½ï¿½ï¿½ï¿½JSï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ -->
                 </div>
             </section>
 
-            <!-- ÖÐ¼ä³é½±Çø -->
+            <!-- ï¿½Ð¼ï¿½é½±ï¿½ï¿½ -->
             <section class="lottery-section">
                 <div class="lottery-machine">
                     <div class="machine-top">
@@ -51,20 +51,20 @@
                     
                     <div class="display-screen">
                         <div class="screen-inner" id="displayScreen">
-                            <div class="waiting-text">×¼±¸³é½±</div>
+                            <div class="waiting-text">×¼ï¿½ï¿½ï¿½é½±</div>
                         </div>
                     </div>
 
                     <div class="prize-selector">
-                        <label for="prizeSelect">Ñ¡Ôñ½±Ïî£º</label>
+                        <label for="prizeSelect">Ñ¡ï¿½ï¿½ï¿½î£º</label>
                         <select id="prizeSelect" class="prize-select">
-                            <!-- Ñ¡ÏîÓÉJS¶¯Ì¬Éú³É -->
+                            <!-- Ñ¡ï¿½ï¿½ï¿½ï¿½JSï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ -->
                         </select>
-                        <span class="remaining" id="remainingCount">Ê£Óà: 0</span>
+                        <span class="remaining" id="remainingCount">Ê£ï¿½ï¿½: 0</span>
                     </div>
 
                     <button class="draw-button" id="drawButton">
-                        <span class="button-text">¿ªÊ¼³é½±</span>
+                        <span class="button-text">ï¿½ï¿½Ê¼ï¿½é½±</span>
                         <span class="button-glow"></span>
                     </button>
 
@@ -73,12 +73,12 @@
                     </div>
                 </div>
 
-                <!-- µ±Ç°ÖÐ½±ÕßÕ¹Ê¾ -->
+                <!-- ï¿½ï¿½Ç°ï¿½Ð½ï¿½ï¿½ï¿½Õ¹Ê¾ -->
                 <div class="current-winner" id="currentWinner">
                     <div class="winner-card hidden">
                         <div class="confetti-container"></div>
                         <div class="winner-content">
-                            <div class="winner-badge">? ¹§Ï²ÖÐ½± ?</div>
+                            <div class="winner-badge">? ï¿½ï¿½Ï²ï¿½Ð½ï¿½ ?</div>
                             <div class="winner-name" id="winnerName"></div>
                             <div class="winner-prize" id="winnerPrize"></div>
                         </div>
@@ -86,54 +86,54 @@
                 </div>
             </section>
 
-            <!-- ÓÒ²àÖÐ½±Ãûµ¥Çø -->
+            <!-- ï¿½Ò²ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -->
             <section class="winners-section">
                 <div class="section-header">
-                    <h2><span class="icon">?</span> ÖÐ½±Ãûµ¥</h2>
+                    <h2><span class="icon">?</span> ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½</h2>
                 </div>
                 <div class="winners-list" id="winnersList">
-                    <div class="empty-list">ÔÝÎÞÖÐ½±¼ÇÂ¼</div>
+                    <div class="empty-list">ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½Â¼</div>
                 </div>
             </section>
         </main>
 
-        <!-- µ×²¿²ÎÓëÕßÐÅÏ¢ -->
+        <!-- ï¿½×²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ -->
         <footer class="footer">
             <div class="participants-info">
                 <span class="info-item">
                     <span class="info-icon">?</span>
-                    ²ÎÓëÈËÊý: <strong id="totalParticipants">0</strong>
+                    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: <strong id="totalParticipants">0</strong>
                 </span>
                 <span class="info-item">
                     <span class="info-icon">?</span>
-                    Ê£ÓàÈËÊý: <strong id="remainingParticipants">0</strong>
+                    Ê£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: <strong id="remainingParticipants">0</strong>
                 </span>
                 <span class="info-item">
                     <span class="info-icon">?</span>
-                    ÒÑÖÐ½±: <strong id="winnersCount">0</strong>
+                    ï¿½ï¿½ï¿½Ð½ï¿½: <strong id="winnersCount">0</strong>
                 </span>
             </div>
             <button class="reset-button" id="resetButton">
-                <span>?</span> ÖØÖÃ³é½±
+                <span>?</span> ï¿½ï¿½ï¿½Ã³é½±
             </button>
         </footer>
     </div>
 
-    <!-- È«ÆÁÖÐ½±ÌØÐ§²ã -->
+    <!-- È«ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ -->
     <div class="celebration-overlay" id="celebrationOverlay">
         <div class="celebration-content">
             <div class="big-winner-card">
                 <div class="sparkle-ring"></div>
                 <div class="winner-avatar" id="bigWinnerAvatar">?</div>
                 <div class="winner-details">
-                    <div class="congrats-text">¹§Ï²</div>
+                    <div class="congrats-text">ï¿½ï¿½Ï²</div>
                     <div class="big-winner-name" id="bigWinnerName"></div>
                     <div class="prize-won">
-                        <span>»ñµÃ</span>
+                        <span>ï¿½ï¿½ï¿½</span>
                         <span class="prize-name" id="bigPrizeName"></span>
                     </div>
                 </div>
-                <button class="close-celebration" id="closeCelebration">È·ÈÏ</button>
+                <button class="close-celebration" id="closeCelebration">È·ï¿½ï¿½</button>
             </div>
         </div>
     </div>

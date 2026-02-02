@@ -1,104 +1,104 @@
-/**
- * ³é½±ÏµÍ³ÅäÖÃÎÄ¼þ
- * °üº¬²ÎÓëÕßÐÅÏ¢ºÍ½±Æ·ÐÅÏ¢
+ï»¿/**
+ * ï¿½é½±ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Í½ï¿½Æ·ï¿½ï¿½Ï¢
  */
 
-// ²ÎÓëÕßÅäÖÃ - °üº¬ÐÕÃûºÍÖÐ½±È¨ÖØ
-// È¨ÖØÔ½¸ß£¬ÖÐ½±¸ÅÂÊÔ½´ó£¨Ïà¶Ô¸ÅÂÊ£©
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½È¨ï¿½ï¿½
+// È¨ï¿½ï¿½Ô½ï¿½ß£ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½Ê£ï¿½
 const PARTICIPANTS_CONFIG = [
-    { name: "ÕÅÈý", weight: 1 },
-    { name: "ÀîËÄ", weight: 1.5 },
-    { name: "ÍõÎå", weight: 1 },
-    { name: "ÕÔÁù", weight: 2 },
-    { name: "Ç®Æß", weight: 1 },
-    { name: "Ëï°Ë", weight: 1.2 },
-    { name: "ÖÜ¾Å", weight: 1 },
-    { name: "ÎâÊ®", weight: 1.8 },
+    { name: "ï¿½ï¿½ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½ï¿½ï¿½", weight: 1.5 },
+    { name: "ï¿½ï¿½ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½ï¿½ï¿½", weight: 2 },
+    { name: "Ç®ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½ï¿½", weight: 1.2 },
+    { name: "ï¿½Ü¾ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½Ê®", weight: 1.8 },
     { name: "Ö£Ê®Ò»", weight: 1 },
-    { name: "ÍõÊ®¶þ", weight: 1.3 },
-    { name: "·ëÊ®Èý", weight: 1 },
-    { name: "³ÂÊ®ËÄ", weight: 1.5 },
-    { name: "ñÒÊ®Îå", weight: 1 },
-    { name: "ÎÀÊ®Áù", weight: 1.1 },
-    { name: "½¯Ê®Æß", weight: 1 },
-    { name: "ÉòÊ®°Ë", weight: 1.4 },
-    { name: "º«Ê®¾Å", weight: 1 },
-    { name: "Ñî¶þÊ®", weight: 1.6 },
-    { name: "ÖìØ¥Ò»", weight: 1 },
-    { name: "ÇØØ¥¶þ", weight: 1.2 },
-    { name: "ÓÈØ¥Èý", weight: 1 },
-    { name: "ÐíØ¥ËÄ", weight: 1.3 },
-    { name: "ºÎØ¥Îå", weight: 1 },
-    { name: "ÂÀØ¥Áù", weight: 1.7 },
-    { name: "Ê©Ø¥Æß", weight: 1 },
-    { name: "ÕÅØ¥°Ë", weight: 1.1 },
-    { name: "¿×Ø¥¾Å", weight: 1 },
-    { name: "²ÜÈýÊ®", weight: 1.5 },
+    { name: "ï¿½ï¿½Ê®ï¿½ï¿½", weight: 1.3 },
+    { name: "ï¿½ï¿½Ê®ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½Ê®ï¿½ï¿½", weight: 1.5 },
+    { name: "ï¿½ï¿½Ê®ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½Ê®ï¿½ï¿½", weight: 1.1 },
+    { name: "ï¿½ï¿½Ê®ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½Ê®ï¿½ï¿½", weight: 1.4 },
+    { name: "ï¿½ï¿½Ê®ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½ï¿½Ê®", weight: 1.6 },
+    { name: "ï¿½ï¿½Ø¥Ò»", weight: 1 },
+    { name: "ï¿½ï¿½Ø¥ï¿½ï¿½", weight: 1.2 },
+    { name: "ï¿½ï¿½Ø¥ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½Ø¥ï¿½ï¿½", weight: 1.3 },
+    { name: "ï¿½ï¿½Ø¥ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½Ø¥ï¿½ï¿½", weight: 1.7 },
+    { name: "Ê©Ø¥ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½Ø¥ï¿½ï¿½", weight: 1.1 },
+    { name: "ï¿½ï¿½Ø¥ï¿½ï¿½", weight: 1 },
+    { name: "ï¿½ï¿½ï¿½ï¿½Ê®", weight: 1.5 },
 ];
 
-// ½±Æ·ÅäÖÃ - °üº¬µÈ¼¶¡¢ÊýÁ¿¡¢Í¼Æ¬Â·¾¶¡¢Ãû³Æ
+// ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 const PRIZES_CONFIG = [
     {
         level: 1,
-        name: "ÌØµÈ½±",
+        name: "ï¿½ØµÈ½ï¿½",
         displayName: "iPhone 16 Pro Max",
         quantity: 1,
         image: "images/prize1.png",
-        description: "Æ»¹û×îÐÂÆì½¢ÊÖ»ú",
-        color: "#FFD700" // ½ðÉ«
+        description: "Æ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì½¢ï¿½Ö»ï¿½",
+        color: "#FFD700" // ï¿½ï¿½É«
     },
     {
         level: 2,
-        name: "Ò»µÈ½±",
+        name: "Ò»ï¿½È½ï¿½",
         displayName: "iPad Pro 2024",
         quantity: 2,
         image: "images/prize2.png",
-        description: "¸ßÐÔÄÜÆ½°åµçÄÔ",
-        color: "#C0C0C0" // ÒøÉ«
+        description: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½",
+        color: "#C0C0C0" // ï¿½ï¿½É«
     },
     {
         level: 3,
-        name: "¶þµÈ½±",
+        name: "ï¿½ï¿½ï¿½È½ï¿½",
         displayName: "AirPods Pro",
         quantity: 3,
         image: "images/prize3.png",
-        description: "Ö÷¶¯½µÔëÎÞÏß¶ú»ú",
+        description: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½",
         color: "#CD7F32" // Í­É«
     },
     {
         level: 4,
-        name: "ÈýµÈ½±",
-        displayName: "Ð¡Ã×ÊÖ»·8",
+        name: "ï¿½ï¿½ï¿½È½ï¿½",
+        displayName: "Ð¡ï¿½ï¿½ï¿½Ö»ï¿½8",
         quantity: 5,
         image: "images/prize4.png",
-        description: "ÖÇÄÜÔË¶¯ÊÖ»·",
+        description: "ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½Ö»ï¿½",
         color: "#E8E8E8"
     },
     {
         level: 5,
-        name: "²ÎÓë½±",
-        displayName: "¶¨ÖÆUÅÌ",
+        name: "ï¿½ï¿½ï¿½ë½±",
+        displayName: "ï¿½ï¿½ï¿½ï¿½Uï¿½ï¿½",
         quantity: 10,
         image: "images/prize5.png",
-        description: "64GB¸ßËÙUÅÌ",
+        description: "64GBï¿½ï¿½ï¿½ï¿½Uï¿½ï¿½",
         color: "#87CEEB"
     }
 ];
 
-// ÏµÍ³ÅäÖÃ
+// ÏµÍ³ï¿½ï¿½ï¿½ï¿½
 const SYSTEM_CONFIG = {
-    // ³é½±¶¯»­³ÖÐøÊ±¼ä£¨ºÁÃë£©
+    // ï¿½é½±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¨ï¿½ï¿½ï¿½ë£©
     animationDuration: 3000,
-    // ÊÇ·ñÏÔÊ¾È¨ÖØÐÅÏ¢
+    // ï¿½Ç·ï¿½ï¿½ï¿½Ê¾È¨ï¿½ï¿½ï¿½ï¿½Ï¢
     showWeight: false,
-    // ¹«Ë¾/»î¶¯Ãû³Æ
-    eventName: "2026Äê¶È³é½±Ê¢µä",
-    // Ö÷ÌâÉ«
+    // ï¿½ï¿½Ë¾/ï¿½î¶¯ï¿½ï¿½ï¿½ï¿½
+    eventName: "2026ï¿½ï¿½È³é½±Ê¢ï¿½ï¿½",
+    // ï¿½ï¿½ï¿½ï¿½É«
     primaryColor: "#667eea",
     secondaryColor: "#764ba2"
 };
 
-// µ¼³öÅäÖÃ£¨¼æÈÝÄ£¿é»¯ºÍÈ«¾ÖÒýÓÃ£©
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½é»¯ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { PARTICIPANTS_CONFIG, PRIZES_CONFIG, SYSTEM_CONFIG };
 }

@@ -1,29 +1,29 @@
-/**
- * ³é½±ÏµÍ³ - Ö÷Âß¼­ÎÄ¼þ
- * ÊµÏÖ²»·Å»Ø³é½±¹¦ÄÜ
+ï»¿/**
+ * ï¿½é½±ÏµÍ³ - ï¿½ï¿½ï¿½ß¼ï¿½ï¿½Ä¼ï¿½
+ * Êµï¿½Ö²ï¿½ï¿½Å»Ø³é½±ï¿½ï¿½ï¿½ï¿½
  */
 
 class LotterySystem {
     constructor() {
-        // ´ÓÅäÖÃ¼ÓÔØÊý¾Ý
-        this.participants = JSON.parse(JSON.stringify(PARTICIPANTS_CONFIG)); // Éî¿½±´
-        this.prizes = JSON.parse(JSON.stringify(PRIZES_CONFIG)); // Éî¿½±´
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        this.participants = JSON.parse(JSON.stringify(PARTICIPANTS_CONFIG)); // ï¿½î¿½ï¿½ï¿½
+        this.prizes = JSON.parse(JSON.stringify(PRIZES_CONFIG)); // ï¿½î¿½ï¿½ï¿½
         this.config = SYSTEM_CONFIG;
         
-        // ÖÐ½±¼ÇÂ¼
+        // ï¿½Ð½ï¿½ï¿½ï¿½Â¼
         this.winners = [];
         
-        // ³é½±×´Ì¬
+        // ï¿½é½±×´Ì¬
         this.isRolling = false;
         
-        // »º´æDOMÔªËØ
+        // ï¿½ï¿½ï¿½ï¿½DOMÔªï¿½ï¿½
         this.cacheElements();
         
-        // ³õÊ¼»¯
+        // ï¿½ï¿½Ê¼ï¿½ï¿½
         this.init();
     }
     
-    // »º´æDOMÔªËØ
+    // ï¿½ï¿½ï¿½ï¿½DOMÔªï¿½ï¿½
     cacheElements() {
         this.elements = {
             prizesGrid: document.getElementById('prizesGrid'),
@@ -47,7 +47,7 @@ class LotterySystem {
         };
     }
     
-    // ³õÊ¼»¯ÏµÍ³
+    // ï¿½ï¿½Ê¼ï¿½ï¿½ÏµÍ³
     init() {
         this.renderPrizes();
         this.renderPrizeSelect();
@@ -57,7 +57,7 @@ class LotterySystem {
         this.loadFromStorage();
     }
     
-    // äÖÈ¾½±Æ·ÁÐ±í
+    // ï¿½ï¿½È¾ï¿½ï¿½Æ·ï¿½Ð±ï¿½
     renderPrizes() {
         const html = this.prizes.map((prize, index) => {
             const remaining = prize.quantity;
@@ -85,7 +85,7 @@ class LotterySystem {
         this.elements.prizesGrid.innerHTML = html;
     }
     
-    // »ñÈ¡½±Æ·±íÇé·ûºÅ
+    // ï¿½ï¿½È¡ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     getPrizeEmoji(level) {
         const emojis = {
             1: '?',
@@ -97,26 +97,26 @@ class LotterySystem {
         return emojis[level] || '?';
     }
     
-    // äÖÈ¾½±ÏîÑ¡ÔñÆ÷
+    // ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½
     renderPrizeSelect() {
         const html = this.prizes
             .filter(prize => prize.quantity > 0)
             .map(prize => `
-                <option value="${prize.level}">${prize.name} - ${prize.displayName} (Ê£Óà${prize.quantity})</option>
+                <option value="${prize.level}">${prize.name} - ${prize.displayName} (Ê£ï¿½ï¿½${prize.quantity})</option>
             `).join('');
         
-        this.elements.prizeSelect.innerHTML = html || '<option value="">ÔÝÎÞ¿É³é½±Ïî</option>';
+        this.elements.prizeSelect.innerHTML = html || '<option value="">ï¿½ï¿½ï¿½Þ¿É³é½±ï¿½ï¿½</option>';
         this.updateRemainingCount();
     }
     
-    // ¸üÐÂÊ£ÓàÊýÁ¿ÏÔÊ¾
+    // ï¿½ï¿½ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
     updateRemainingCount() {
         const selectedLevel = parseInt(this.elements.prizeSelect.value);
         const prize = this.prizes.find(p => p.level === selectedLevel);
-        this.elements.remainingCount.textContent = `Ê£Óà: ${prize ? prize.quantity : 0}`;
+        this.elements.remainingCount.textContent = `Ê£ï¿½ï¿½: ${prize ? prize.quantity : 0}`;
     }
     
-    // ¸üÐÂÍ³¼ÆÐÅÏ¢
+    // ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½Ï¢
     updateStats() {
         const totalParticipants = PARTICIPANTS_CONFIG.length;
         const remainingParticipants = this.participants.length;
@@ -127,28 +127,28 @@ class LotterySystem {
         this.elements.winnersCount.textContent = winnersCount;
     }
     
-    // °ó¶¨ÊÂ¼þ
+    // ï¿½ï¿½ï¿½Â¼ï¿½
     bindEvents() {
-        // ³é½±°´Å¥
+        // ï¿½é½±ï¿½ï¿½Å¥
         this.elements.drawButton.addEventListener('click', () => this.startDraw());
         
-        // ½±ÏîÑ¡Ôñ±ä»¯
+        // ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ä»¯
         this.elements.prizeSelect.addEventListener('change', () => this.updateRemainingCount());
         
-        // ÖØÖÃ°´Å¥
+        // ï¿½ï¿½ï¿½Ã°ï¿½Å¥
         this.elements.resetButton.addEventListener('click', () => this.resetLottery());
         
-        // ¹Ø±ÕÇì×£µ¯´°
+        // ï¿½Ø±ï¿½ï¿½ï¿½×£ï¿½ï¿½ï¿½ï¿½
         this.elements.closeCelebration.addEventListener('click', () => this.closeCelebration());
         
-        // µã»÷±³¾°¹Ø±Õ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø±ï¿½
         this.elements.celebrationOverlay.addEventListener('click', (e) => {
             if (e.target === this.elements.celebrationOverlay) {
                 this.closeCelebration();
             }
         });
         
-        // ¼üÅÌÊÂ¼þ - ¿Õ¸ñ¿ªÊ¼³é½±
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ - ï¿½Õ¸ï¿½Ê¼ï¿½é½±
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' && !this.isRolling) {
                 e.preventDefault();
@@ -157,49 +157,49 @@ class LotterySystem {
         });
     }
     
-    // ¿ªÊ¼³é½±
+    // ï¿½ï¿½Ê¼ï¿½é½±
     startDraw() {
         if (this.isRolling) return;
         
         const selectedLevel = parseInt(this.elements.prizeSelect.value);
         if (!selectedLevel) {
-            this.showMessage('ÇëÑ¡ÔñÒª³éÈ¡µÄ½±Ïî');
+            this.showMessage('ï¿½ï¿½Ñ¡ï¿½ï¿½Òªï¿½ï¿½È¡ï¿½Ä½ï¿½ï¿½ï¿½');
             return;
         }
         
         const prize = this.prizes.find(p => p.level === selectedLevel);
         if (!prize || prize.quantity <= 0) {
-            this.showMessage('¸Ã½±ÏîÒÑ³éÍê');
+            this.showMessage('ï¿½Ã½ï¿½ï¿½ï¿½ï¿½Ñ³ï¿½ï¿½ï¿½');
             return;
         }
         
         if (this.participants.length === 0) {
-            this.showMessage('Ã»ÓÐÊ£Óà²ÎÓëÕß');
+            this.showMessage('Ã»ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
             return;
         }
         
         this.isRolling = true;
         this.elements.drawButton.disabled = true;
         this.elements.drawButton.classList.add('rolling');
-        this.elements.drawButton.querySelector('.button-text').textContent = '³é½±ÖÐ...';
+        this.elements.drawButton.querySelector('.button-text').textContent = 'ï¿½é½±ï¿½ï¿½...';
         
-        // Òþ²ØÖ®Ç°µÄÖÐ½±¿¨Æ¬
+        // ï¿½ï¿½ï¿½ï¿½Ö®Ç°ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½Æ¬
         this.elements.currentWinner.querySelector('.winner-card').classList.add('hidden');
         
-        // ¿ªÊ¼¹ö¶¯¶¯»­
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         this.rollNames(prize);
     }
     
-    // Ãû×Ö¹ö¶¯¶¯»­
+    // ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     rollNames(prize) {
         let rollCount = 0;
-        const maxRolls = 30; // ¹ö¶¯´ÎÊý
-        const baseInterval = 50; // »ù´¡¼ä¸ô
+        const maxRolls = 30; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        const baseInterval = 50; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         
         const roll = () => {
             rollCount++;
             
-            // Ëæ»úÑ¡ÔñÒ»¸öÃû×ÖÏÔÊ¾
+            // ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
             const randomIndex = Math.floor(Math.random() * this.participants.length);
             const randomName = this.participants[randomIndex].name;
             
@@ -207,14 +207,14 @@ class LotterySystem {
                 <div class="rolling-names">${randomName}</div>
             `;
             
-            // ¼ÆËãÏÂÒ»´Î¹ö¶¯µÄ¼ä¸ô£¨Öð½¥±äÂý£©
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î¹ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ð½¥±ï¿½ï¿½ï¿½ï¿½ï¿½
             const progress = rollCount / maxRolls;
             const interval = baseInterval + (progress * progress * 200);
             
             if (rollCount < maxRolls) {
                 setTimeout(roll, interval);
             } else {
-                // ¹ö¶¯½áÊø£¬È·¶¨ÖÐ½±Õß
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½
                 this.determineWinner(prize);
             }
         };
@@ -222,15 +222,15 @@ class LotterySystem {
         roll();
     }
     
-    // ¸ù¾ÝÈ¨ÖØÈ·¶¨ÖÐ½±Õß
+    // ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½È·ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½
     determineWinner(prize) {
-        // ¼ÆËã×ÜÈ¨ÖØ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½
         const totalWeight = this.participants.reduce((sum, p) => sum + p.weight, 0);
         
-        // Éú³ÉËæ»úÊý
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         let random = Math.random() * totalWeight;
         
-        // ¸ù¾ÝÈ¨ÖØÑ¡ÔñÖÐ½±Õß
+        // ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½
         let winner = null;
         let winnerIndex = -1;
         
@@ -243,19 +243,19 @@ class LotterySystem {
             }
         }
         
-        // Èç¹ûÃ»ÕÒµ½£¨¸¡µãÊý¾«¶ÈÎÊÌâ£©£¬È¡×îºóÒ»¸ö
+        // ï¿½ï¿½ï¿½Ã»ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£©ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
         if (!winner) {
             winnerIndex = this.participants.length - 1;
             winner = this.participants[winnerIndex];
         }
         
-        // ´Ó²ÎÓëÕßÁÐ±íÖÐÒÆ³ý£¨²»·Å»Ø£©
+        // ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å»Ø£ï¿½
         this.participants.splice(winnerIndex, 1);
         
-        // ¼õÉÙ½±Æ·ÊýÁ¿
+        // ï¿½ï¿½ï¿½Ù½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
         prize.quantity--;
         
-        // ¼ÇÂ¼ÖÐ½±ÐÅÏ¢
+        // ï¿½ï¿½Â¼ï¿½Ð½ï¿½ï¿½ï¿½Ï¢
         const winnerRecord = {
             name: winner.name,
             prize: prize.name,
@@ -263,75 +263,75 @@ class LotterySystem {
             prizeLevel: prize.level,
             time: new Date().toLocaleTimeString()
         };
-        this.winners.unshift(winnerRecord); // ÐÂµÄÔÚÇ°Ãæ
+        this.winners.unshift(winnerRecord); // ï¿½Âµï¿½ï¿½ï¿½Ç°ï¿½ï¿½
         
-        // ÏÔÊ¾ÖÐ½±½á¹û
+        // ï¿½ï¿½Ê¾ï¿½Ð½ï¿½ï¿½ï¿½ï¿½
         this.showWinner(winnerRecord, prize);
         
-        // ±£´æµ½±¾µØ´æ´¢
+        // ï¿½ï¿½ï¿½æµ½ï¿½ï¿½ï¿½Ø´æ´¢
         this.saveToStorage();
     }
     
-    // ÏÔÊ¾ÖÐ½±Õß
+    // ï¿½ï¿½Ê¾ï¿½Ð½ï¿½ï¿½ï¿½
     showWinner(winnerRecord, prize) {
-        // ¸üÐÂÏÔÊ¾ÆÁ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½
         this.elements.displayScreen.innerHTML = `
             <div class="winner-display">
                 <div class="name">${winnerRecord.name}</div>
-                <div class="prize">»ñµÃ ${prize.name} - ${prize.displayName}</div>
+                <div class="prize">ï¿½ï¿½ï¿½ ${prize.name} - ${prize.displayName}</div>
             </div>
         `;
         
-        // ÏÔÊ¾ÖÐ½±¿¨Æ¬
+        // ï¿½ï¿½Ê¾ï¿½Ð½ï¿½ï¿½ï¿½Æ¬
         const winnerCard = this.elements.currentWinner.querySelector('.winner-card');
         winnerCard.classList.remove('hidden');
         this.elements.winnerName.textContent = winnerRecord.name;
         this.elements.winnerPrize.textContent = `${prize.name} - ${prize.displayName}`;
         
-        // ¸üÐÂ½çÃæ
+        // ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½
         this.renderPrizes();
         this.renderPrizeSelect();
         this.renderWinnersList();
         this.updateStats();
         
-        // Èç¹ûÊÇÌØµÈ½±»òÒ»µÈ½±£¬ÏÔÊ¾´óÐÍÇì×£¶¯»­
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ØµÈ½ï¿½ï¿½ï¿½Ò»ï¿½È½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×£ï¿½ï¿½ï¿½ï¿½
         if (prize.level <= 2) {
             setTimeout(() => {
                 this.showCelebration(winnerRecord);
             }, 500);
         }
         
-        // ´´½¨²Ê´øÐ§¹û
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ê´ï¿½Ð§ï¿½ï¿½
         this.createConfetti();
         
-        // ÖØÖÃ°´Å¥×´Ì¬
+        // ï¿½ï¿½ï¿½Ã°ï¿½Å¥×´Ì¬
         this.isRolling = false;
         this.elements.drawButton.disabled = false;
         this.elements.drawButton.classList.remove('rolling');
-        this.elements.drawButton.querySelector('.button-text').textContent = '¿ªÊ¼³é½±';
+        this.elements.drawButton.querySelector('.button-text').textContent = 'ï¿½ï¿½Ê¼ï¿½é½±';
     }
     
-    // ÏÔÊ¾´óÐÍÇì×£¶¯»­
+    // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×£ï¿½ï¿½ï¿½ï¿½
     showCelebration(winnerRecord) {
         this.elements.bigWinnerName.textContent = winnerRecord.name;
         this.elements.bigPrizeName.textContent = `${winnerRecord.prize} - ${winnerRecord.prizeName}`;
         this.elements.celebrationOverlay.classList.add('active');
         
-        // Ìí¼Ó¸ü¶à²Ê´ø
+        // ï¿½ï¿½Ó¸ï¿½ï¿½ï¿½Ê´ï¿½
         for (let i = 0; i < 50; i++) {
             setTimeout(() => this.createConfetti(true), i * 50);
         }
     }
     
-    // ¹Ø±ÕÇì×£µ¯´°
+    // ï¿½Ø±ï¿½ï¿½ï¿½×£ï¿½ï¿½ï¿½ï¿½
     closeCelebration() {
         this.elements.celebrationOverlay.classList.remove('active');
     }
     
-    // äÖÈ¾ÖÐ½±Ãûµ¥
+    // ï¿½ï¿½È¾ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½
     renderWinnersList() {
         if (this.winners.length === 0) {
-            this.elements.winnersList.innerHTML = '<div class="empty-list">ÔÝÎÞÖÐ½±¼ÇÂ¼</div>';
+            this.elements.winnersList.innerHTML = '<div class="empty-list">ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½Â¼</div>';
             return;
         }
         
@@ -357,7 +357,7 @@ class LotterySystem {
         this.elements.winnersList.innerHTML = html;
     }
     
-    // ´´½¨²Ê´øÐ§¹û
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ê´ï¿½Ð§ï¿½ï¿½
     createConfetti(intense = false) {
         const container = this.elements.currentWinner;
         const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8'];
@@ -383,43 +383,43 @@ class LotterySystem {
                 container.appendChild(confetti);
             }
             
-            // ¶¯»­½áÊøºóÒÆ³ý
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ³ï¿½
             setTimeout(() => confetti.remove(), 4000);
         }
     }
     
-    // ÖØÖÃ³é½±
+    // ï¿½ï¿½ï¿½Ã³é½±
     resetLottery() {
         if (this.isRolling) return;
         
-        if (!confirm('È·¶¨ÒªÖØÖÃ³é½±Âð£¿ËùÓÐÖÐ½±¼ÇÂ¼½«±»Çå¿Õ£¡')) {
+        if (!confirm('È·ï¿½ï¿½Òªï¿½ï¿½ï¿½Ã³é½±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ£ï¿½')) {
             return;
         }
         
-        // ÖØÖÃÊý¾Ý
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         this.participants = JSON.parse(JSON.stringify(PARTICIPANTS_CONFIG));
         this.prizes = JSON.parse(JSON.stringify(PRIZES_CONFIG));
         this.winners = [];
         
-        // Çå³ý±¾µØ´æ´¢
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´æ´¢
         localStorage.removeItem('lotteryState');
         
-        // ÖØÐÂäÖÈ¾
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¾
         this.renderPrizes();
         this.renderPrizeSelect();
         this.renderWinnersList();
         this.updateStats();
         
-        // ÖØÖÃÏÔÊ¾ÆÁ
-        this.elements.displayScreen.innerHTML = '<div class="waiting-text">×¼±¸³é½±</div>';
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½
+        this.elements.displayScreen.innerHTML = '<div class="waiting-text">×¼ï¿½ï¿½ï¿½é½±</div>';
         
-        // Òþ²ØÖÐ½±¿¨Æ¬
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½Æ¬
         this.elements.currentWinner.querySelector('.winner-card').classList.add('hidden');
         
-        this.showMessage('³é½±ÒÑÖØÖÃ');
+        this.showMessage('ï¿½é½±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
     }
     
-    // ±£´æ×´Ì¬µ½±¾µØ´æ´¢
+    // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½Ø´æ´¢
     saveToStorage() {
         const state = {
             participants: this.participants,
@@ -429,7 +429,7 @@ class LotterySystem {
         localStorage.setItem('lotteryState', JSON.stringify(state));
     }
     
-    // ´Ó±¾µØ´æ´¢¼ÓÔØ×´Ì¬
+    // ï¿½Ó±ï¿½ï¿½Ø´æ´¢ï¿½ï¿½ï¿½ï¿½×´Ì¬
     loadFromStorage() {
         const saved = localStorage.getItem('lotteryState');
         if (saved) {
@@ -439,20 +439,20 @@ class LotterySystem {
                 this.prizes = state.prizes;
                 this.winners = state.winners;
                 
-                // ÖØÐÂäÖÈ¾
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¾
                 this.renderPrizes();
                 this.renderPrizeSelect();
                 this.renderWinnersList();
                 this.updateStats();
             } catch (e) {
-                console.error('¼ÓÔØ´æ´¢Êý¾ÝÊ§°Ü:', e);
+                console.error('ï¿½ï¿½ï¿½Ø´æ´¢ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½:', e);
             }
         }
     }
     
-    // ÏÔÊ¾ÏûÏ¢
+    // ï¿½ï¿½Ê¾ï¿½ï¿½Ï¢
     showMessage(text) {
-        // ¼òµ¥µÄÏûÏ¢ÌáÊ¾
+        // ï¿½òµ¥µï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ê¾
         const message = document.createElement('div');
         message.style.cssText = `
             position: fixed;
@@ -473,12 +473,12 @@ class LotterySystem {
         setTimeout(() => message.remove(), 2000);
     }
     
-    // ³õÊ¼»¯Á£×Ó±³¾°
+    // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½
     initParticles() {
         const canvas = this.elements.particles;
         const ctx = canvas.getContext('2d');
         
-        // ÉèÖÃ»­²¼´óÐ¡
+        // ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -486,11 +486,11 @@ class LotterySystem {
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
         
-        // Á£×ÓÊý×é
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         const particles = [];
         const particleCount = 80;
         
-        // ´´½¨Á£×Ó
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
@@ -503,29 +503,29 @@ class LotterySystem {
             });
         }
         
-        // ¶¯»­Ñ­»·
+        // ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             particles.forEach((p, i) => {
-                // ¸üÐÂÎ»ÖÃ
+                // ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
                 p.x += p.speedX;
                 p.y += p.speedY;
                 
-                // ±ß½ç´¦Àí
+                // ï¿½ß½ç´¦ï¿½ï¿½
                 if (p.x < 0) p.x = canvas.width;
                 if (p.x > canvas.width) p.x = 0;
                 if (p.y < 0) p.y = canvas.height;
                 if (p.y > canvas.height) p.y = 0;
                 
-                // »æÖÆÁ£×Ó
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fillStyle = p.color;
                 ctx.globalAlpha = p.opacity;
                 ctx.fill();
                 
-                // »æÖÆÁ¬Ïß
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 particles.forEach((p2, j) => {
                     if (i === j) return;
                     const dx = p.x - p2.x;
@@ -551,7 +551,7 @@ class LotterySystem {
     }
 }
 
-// Ìí¼ÓÏûÏ¢ÌáÊ¾¶¯»­ÑùÊ½
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
 const style = document.createElement('style');
 style.textContent = `
     @keyframes fadeInOut {
@@ -563,7 +563,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Ò³Ãæ¼ÓÔØÍê³Éºó³õÊ¼»¯
+// Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éºï¿½ï¿½Ê¼ï¿½ï¿½
 document.addEventListener('DOMContentLoaded', () => {
     window.lotterySystem = new LotterySystem();
 });
