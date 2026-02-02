@@ -10,6 +10,9 @@ class LotterySystem {
         this.config = SYSTEM_CONFIG;
         this.winners = [];
         this.isRolling = false;
+        this.currentSong = null;
+        this.currentWinnerRecords = null;
+        this.currentPrize = null;
         this.cacheElements();
         this.init();
     }
@@ -36,7 +39,14 @@ class LotterySystem {
             particles: document.getElementById('particles'),
             drawCount: document.getElementById('drawCount'),
             countMinus: document.getElementById('countMinus'),
-            countPlus: document.getElementById('countPlus')
+            countPlus: document.getElementById('countPlus'),
+            // AI歌曲相关元素
+            songSection: document.getElementById('songSection'),
+            songStatus: document.getElementById('songStatus'),
+            songLyrics: document.getElementById('songLyrics'),
+            playSongBtn: document.getElementById('playSongBtn'),
+            stopSongBtn: document.getElementById('stopSongBtn'),
+            regenerateSongBtn: document.getElementById('regenerateSongBtn')
         };
     }
     
@@ -49,6 +59,16 @@ class LotterySystem {
         this.initParticles();
         this.loadFromStorage();
         this.validateDrawCount();
+        
+        // 初始化AI歌曲服务
+        if (typeof initAISongService === 'function') {
+            initAISongService();
+        }
+        
+        // 默认隐藏歌曲区域
+        if (this.elements.songSection) {
+            this.elements.songSection.classList.add('hidden');
+        }
     }
     
     renderPrizes() {
@@ -121,6 +141,11 @@ class LotterySystem {
         this.elements.countMinus.addEventListener('click', () => this.adjustDrawCount(-1));
         this.elements.countPlus.addEventListener('click', () => this.adjustDrawCount(1));
         this.elements.drawCount.addEventListener('change', () => this.validateDrawCount());
+        
+        // AI歌曲控制按钮
+        this.elements.playSongBtn.addEventListener('click', () => this.playSong());
+        this.elements.stopSongBtn.addEventListener('click', () => this.stopSong());
+        this.elements.regenerateSongBtn.addEventListener('click', () => this.regenerateSong());
         
         this.elements.celebrationOverlay.addEventListener('click', (e) => {
             if (e.target === this.elements.celebrationOverlay) {
@@ -360,6 +385,10 @@ class LotterySystem {
         const records = Array.isArray(winnerRecords) ? winnerRecords : [winnerRecords];
         const names = records.map(w => w.name);
         
+        // 保存当前中奖信息用于歌曲生成
+        this.currentWinnerRecords = records;
+        this.currentPrize = prize;
+        
         // 更新大奖名单显示
         this.elements.bigWinnersList.innerHTML = names.map((name, i) => `
             <div class="big-winner-name-item" style="animation-delay: ${i * 0.15}s">${name}</div>
@@ -387,10 +416,135 @@ class LotterySystem {
                 setTimeout(() => this.createConfetti(true), i * 60);
             }
         }, 2000);
+        
+        // 生成AI歌曲
+        this.generateSong(records, prizeInfo);
     }
     
     closeCelebration() {
         this.elements.celebrationOverlay.classList.remove('active');
+        this.stopSong();
+    }
+    
+    // 生成AI歌曲
+    async generateSong(winnerRecords, prize) {
+        // 检查AI服务是否可用
+        if (!aiSongService || !aiSongService.isEnabledForPrize(prize.level)) {
+            this.elements.songSection.classList.add('hidden');
+            return;
+        }
+        
+        this.elements.songSection.classList.remove('hidden');
+        this.resetSongUI();
+        
+        // 更新状态
+        this.updateSongStatus('generating', '🎵', '正在创作祝贺歌曲...');
+        
+        try {
+            this.currentSong = await aiSongService.generateAndPlay(
+                winnerRecords,
+                prize,
+                (status, message) => {
+                    switch (status) {
+                        case 'generating-lyrics':
+                            this.updateSongStatus('generating', '✍️', message);
+                            break;
+                        case 'generating-audio':
+                            this.updateSongStatus('generating', '🎤', message);
+                            break;
+                        case 'ready':
+                            this.updateSongStatus('ready', '✅', '歌曲已准备就绪！');
+                            break;
+                        case 'error':
+                            this.updateSongStatus('error', '⚠️', message);
+                            break;
+                    }
+                }
+            );
+            
+            if (this.currentSong) {
+                // 显示歌词
+                this.elements.songLyrics.textContent = this.currentSong.lyrics;
+                
+                // 启用按钮
+                this.elements.playSongBtn.disabled = false;
+                this.elements.regenerateSongBtn.disabled = false;
+                
+                // 如果有音频且设置了自动播放
+                if (this.currentSong.audioUrl && AI_CONFIG.autoPlay) {
+                    this.playSong();
+                }
+            }
+        } catch (error) {
+            console.error('生成歌曲失败:', error);
+            this.updateSongStatus('error', '❌', '生成失败，请重试');
+            this.elements.regenerateSongBtn.disabled = false;
+        }
+    }
+    
+    // 更新歌曲状态显示
+    updateSongStatus(type, icon, text) {
+        this.elements.songStatus.className = `song-status ${type}`;
+        this.elements.songStatus.innerHTML = `
+            <span class="status-icon">${icon}</span>
+            <span class="status-text">${text}</span>
+        `;
+    }
+    
+    // 重置歌曲UI
+    resetSongUI() {
+        this.elements.songLyrics.textContent = '';
+        this.elements.playSongBtn.disabled = true;
+        this.elements.playSongBtn.classList.remove('playing');
+        this.elements.playSongBtn.innerHTML = '<span class="btn-icon">▶</span><span class="btn-text">播放歌曲</span>';
+        this.elements.stopSongBtn.style.display = 'none';
+        this.elements.regenerateSongBtn.disabled = true;
+        this.currentSong = null;
+    }
+    
+    // 播放歌曲
+    playSong() {
+        if (!this.currentSong || !this.currentSong.audioUrl) {
+            this.showMessage('暂无音频可播放');
+            return;
+        }
+        
+        const audio = this.currentSong.play();
+        
+        if (audio) {
+            this.elements.playSongBtn.classList.add('playing');
+            this.elements.playSongBtn.innerHTML = `
+                <div class="audio-wave">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <span class="btn-text">播放中</span>
+            `;
+            this.elements.stopSongBtn.style.display = 'flex';
+            
+            audio.onended = () => {
+                this.elements.playSongBtn.classList.remove('playing');
+                this.elements.playSongBtn.innerHTML = '<span class="btn-icon">▶</span><span class="btn-text">重新播放</span>';
+                this.elements.stopSongBtn.style.display = 'none';
+            };
+        }
+    }
+    
+    // 停止播放
+    stopSong() {
+        if (aiSongService) {
+            aiSongService.stopAudio();
+        }
+        this.elements.playSongBtn.classList.remove('playing');
+        this.elements.playSongBtn.innerHTML = '<span class="btn-icon">▶</span><span class="btn-text">播放歌曲</span>';
+        this.elements.stopSongBtn.style.display = 'none';
+    }
+    
+    // 重新生成歌曲
+    async regenerateSong() {
+        if (this.currentWinnerRecords && this.currentPrize) {
+            this.stopSong();
+            await this.generateSong(this.currentWinnerRecords, this.currentPrize);
+        }
     }
     
     renderWinnersList() {

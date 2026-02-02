@@ -94,7 +94,71 @@ const SYSTEM_CONFIG = {
     secondaryColor: "#764ba2"
 };
 
+// AI歌曲生成配置
+const AI_CONFIG = {
+    // 是否启用AI歌曲功能
+    enabled: true,
+    
+    // 大模型API配置 (用于生成歌词)
+    llm: {
+        // API提供商: 'openai', 'anthropic', 'zhipu', 'moonshot', 'deepseek', 'custom'
+        provider: 'openai',
+        // API密钥 (请替换为你的实际密钥)
+        apiKey: 'your-api-key-here',
+        // API端点 (可选，用于自定义API地址)
+        baseUrl: 'https://api.openai.com/v1',
+        // 模型名称
+        model: 'gpt-4o-mini',
+        // 请求超时时间(毫秒)
+        timeout: 30000
+    },
+    
+    // TTS语音合成配置 (用于唱歌)
+    tts: {
+        // API提供商: 'openai', 'azure', 'elevenlabs', 'fish-audio', 'custom'
+        provider: 'openai',
+        // API密钥 (可与LLM共用或单独配置)
+        apiKey: 'your-api-key-here',
+        // API端点
+        baseUrl: 'https://api.openai.com/v1',
+        // 语音模型/声音ID
+        voice: 'alloy',
+        // 模型名称
+        model: 'tts-1',
+        // 语速 (0.25-4.0)
+        speed: 1.1
+    },
+    
+    // 歌词生成提示词模板
+    promptTemplate: `你是一个搞怪歌曲创作大师，请为中奖者创作一首简短有趣的祝贺歌。
+
+中奖者: {winners}
+奖品: {prize}
+
+要求:
+1. 歌词要简短(4-6句)，适合朗诵/演唱
+2. 风格搞怪幽默，可以押韵
+3. 必须包含中奖者的名字和奖品名称
+4. 语气热情洋溢，充满祝福
+5. 可以适当夸张和调侃
+6. 直接输出歌词，不要有任何解释
+
+示例风格:
+"哎呀妈呀真厉害，
+{winner}把大奖拿回来！
+{prize}闪闪亮，
+从此走路带着光！
+恭喜恭喜恭喜你，
+今天你是最靓的崽！"`,
+    
+    // 仅对以下奖项等级启用歌曲 (1=特等奖, 2=一等奖, 等)
+    enableForLevels: [1, 2],
+    
+    // 是否自动播放 (false则需要用户点击播放)
+    autoPlay: false
+};
+
 // 导出配置
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { PARTICIPANTS_CONFIG, PRIZES_CONFIG, SYSTEM_CONFIG };
+    module.exports = { PARTICIPANTS_CONFIG, PRIZES_CONFIG, SYSTEM_CONFIG, AI_CONFIG };
 }

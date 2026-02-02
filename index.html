@@ -133,12 +133,37 @@
                         <span class="prize-name" id="bigPrizeName"></span>
                     </div>
                 </div>
+                
+                <!-- AI歌曲播放区 -->
+                <div class="song-section" id="songSection">
+                    <div class="song-status" id="songStatus">
+                        <span class="status-icon">🎵</span>
+                        <span class="status-text">准备生成祝贺歌曲...</span>
+                    </div>
+                    <div class="song-lyrics" id="songLyrics"></div>
+                    <div class="song-controls">
+                        <button class="song-btn play-btn" id="playSongBtn" disabled>
+                            <span class="btn-icon">▶</span>
+                            <span class="btn-text">播放歌曲</span>
+                        </button>
+                        <button class="song-btn stop-btn" id="stopSongBtn" style="display: none;">
+                            <span class="btn-icon">⏹</span>
+                            <span class="btn-text">停止</span>
+                        </button>
+                        <button class="song-btn regenerate-btn" id="regenerateSongBtn" disabled>
+                            <span class="btn-icon">🔄</span>
+                            <span class="btn-text">换一首</span>
+                        </button>
+                    </div>
+                </div>
+                
                 <button class="close-celebration" id="closeCelebration">确认</button>
             </div>
         </div>
     </div>
 
     <script src="config.js"></script>
+    <script src="ai-song.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
