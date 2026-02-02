@@ -1,0 +1,1042 @@
+/* ==========================================
+   抽奖系统 - 现代炫酷风格样式
+   ========================================== */
+
+/* CSS变量定义 */
+:root {
+    --primary: #667eea;
+    --primary-dark: #5a67d8;
+    --secondary: #764ba2;
+    --accent: #f093fb;
+    --gold: #ffd700;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
+    --bg-dark: #0f0f23;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    --bg-glass: rgba(255, 255, 255, 0.08);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --border-glow: rgba(102, 126, 234, 0.5);
+    --shadow-color: rgba(102, 126, 234, 0.3);
+    --success: #10b981;
+    --danger: #ef4444;
+}
+
+/* 基础重置 */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 粒子背景画布 */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 主容器 */
+.container {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+/* ==========================================
+   头部区域
+   ========================================== */
+.header {
+    text-align: center;
+    padding: 30px 20px 40px;
+    position: relative;
+}
+
+.logo-container {
+    position: relative;
+    display: inline-block;
+}
+
+.logo-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    background: radial-gradient(ellipse, var(--primary) 0%, transparent 70%);
+    opacity: 0.3;
+    filter: blur(40px);
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+.title {
+    position: relative;
+    z-index: 1;
+}
+
+.title-text {
+    display: block;
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold) 0%, #fff 30%, var(--gold) 50%, #fff 70%, var(--gold) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shine 3s linear infinite;
+    text-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+    letter-spacing: 8px;
+}
+
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
+.title-sub {
+    display: block;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 12px;
+    margin-top: 10px;
+}
+
+/* ==========================================
+   主内容区域
+   ========================================== */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    gap: 30px;
+    flex: 1;
+    padding: 20px 0;
+}
+
+/* 通用区块头部 */
+.section-header {
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--bg-glass);
+    position: relative;
+}
+
+.section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.icon {
+    font-size: 1.4rem;
+}
+
+/* ==========================================
+   奖品展示区
+   ========================================== */
+.prizes-section {
+    background: var(--bg-glass);
+    border-radius: 24px;
+    padding: 25px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: fit-content;
+}
+
+.prizes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 550px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.prizes-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.prizes-grid::-webkit-scrollbar-track {
+    background: var(--bg-card);
+    border-radius: 3px;
+}
+
+.prizes-grid::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+.prize-card {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.prize-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--prize-color, var(--primary));
+    opacity: 0.8;
+}
+
+.prize-card:hover {
+    transform: translateX(5px);
+    border-color: var(--prize-color, var(--primary));
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2);
+}
+
+.prize-card.depleted {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.prize-card.depleted::after {
+    content: '已抽完';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    padding: 5px 20px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.prize-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--bg-glass), var(--bg-card));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.prize-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.prize-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.prize-level {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--prize-color, var(--gold));
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.prize-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.prize-count {
+    background: var(--bg-glass);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.prize-count .current {
+    color: var(--success);
+}
+
+/* ==========================================
+   抽奖机区域
+   ========================================== */
+.lottery-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.lottery-machine {
+    background: linear-gradient(180deg, #1a1a3e 0%, #0d0d1a 100%);
+    border-radius: 30px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 100px rgba(102, 126, 234, 0.1);
+    position: relative;
+}
+
+.machine-top {
+    margin-bottom: 20px;
+}
+
+.light-strip {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.light {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+    animation: blink 1s ease-in-out infinite;
+}
+
+.light:nth-child(2) { animation-delay: 0.2s; }
+.light:nth-child(3) { animation-delay: 0.4s; }
+.light:nth-child(4) { animation-delay: 0.6s; }
+.light:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.display-screen {
+    background: #000;
+    border-radius: 20px;
+    padding: 4px;
+    margin-bottom: 25px;
+    border: 3px solid #333;
+    box-shadow: inset 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.screen-inner {
+    background: linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 100%);
+    border-radius: 16px;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.screen-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+    );
+    pointer-events: none;
+}
+
+.waiting-text {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.5rem;
+    color: var(--primary);
+    text-shadow: 0 0 20px var(--primary);
+    animation: flicker 2s infinite;
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 1; }
+    93% { opacity: 0.3; }
+    94% { opacity: 1; }
+    96% { opacity: 0.5; }
+    97% { opacity: 1; }
+}
+
+.rolling-names {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow: 0 0 30px var(--gold);
+    animation: roll-text 0.08s steps(1) infinite;
+}
+
+@keyframes roll-text {
+    0%, 100% { transform: translateY(0); }
+}
+
+.winner-display {
+    text-align: center;
+    animation: winner-reveal 0.5s ease-out;
+}
+
+@keyframes winner-reveal {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.winner-display .name {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold), #fff, var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+}
+
+.winner-display .prize {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: 10px;
+}
+
+.prize-selector {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.prize-selector label {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.prize-select {
+    background: var(--bg-glass);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 180px;
+    font-family: inherit;
+}
+
+.prize-select:hover, .prize-select:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+}
+
+.prize-select option {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    padding: 10px;
+}
+
+.remaining {
+    font-size: 0.9rem;
+    color: var(--success);
+    font-weight: 600;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.draw-button {
+    width: 100%;
+    padding: 20px 40px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    letter-spacing: 4px;
+}
+
+.draw-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+}
+
+.draw-button:active:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.draw-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.draw-button .button-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 70%
+    );
+    transform: rotate(45deg);
+    animation: button-shine 3s infinite;
+}
+
+@keyframes button-shine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.draw-button.rolling {
+    animation: pulse-button 0.5s ease-in-out infinite;
+}
+
+@keyframes pulse-button {
+    0%, 100% { box-shadow: 0 0 20px var(--primary); }
+    50% { box-shadow: 0 0 40px var(--primary), 0 0 60px var(--secondary); }
+}
+
+.machine-base {
+    margin-top: 20px;
+    height: 8px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    border-radius: 4px;
+    opacity: 0.5;
+}
+
+/* 当前中奖者展示 */
+.current-winner {
+    width: 100%;
+    max-width: 500px;
+}
+
+.winner-card {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: winner-card-appear 0.5s ease-out;
+}
+
+.winner-card.hidden {
+    display: none;
+}
+
+@keyframes winner-card-appear {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.winner-badge {
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 15px;
+    animation: bounce 0.6s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.winner-card .winner-name {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    margin-bottom: 10px;
+}
+
+.winner-card .winner-prize {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+/* ==========================================
+   中奖名单区
+   ========================================== */
+.winners-section {
+    background: var(--bg-glass);
+    border-radius: 24px;
+    padding: 25px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: fit-content;
+    max-height: 650px;
+    display: flex;
+    flex-direction: column;
+}
+
+.winners-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.winners-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.winners-list::-webkit-scrollbar-track {
+    background: var(--bg-card);
+    border-radius: 3px;
+}
+
+.winners-list::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 3px;
+}
+
+.empty-list {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.winner-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    animation: slide-in 0.3s ease-out;
+    transition: all 0.3s ease;
+}
+
+.winner-item:hover {
+    background: var(--bg-glass);
+    border-color: rgba(255, 215, 0, 0.2);
+}
+
+@keyframes slide-in {
+    0% { opacity: 0; transform: translateX(20px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+.winner-rank {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.winner-rank.rank-1 {
+    background: linear-gradient(135deg, var(--gold), #f0c000);
+    color: #1a1a1a;
+}
+
+.winner-rank.rank-2 {
+    background: linear-gradient(135deg, var(--silver), #a0a0a0);
+    color: #1a1a1a;
+}
+
+.winner-rank.rank-3 {
+    background: linear-gradient(135deg, var(--bronze), #a06020);
+    color: #1a1a1a;
+}
+
+.winner-rank.rank-other {
+    background: var(--bg-glass);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.winner-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.winner-item .winner-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+}
+
+.winner-item .winner-prize {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.winner-time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+/* ==========================================
+   底部区域
+   ========================================== */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 30px;
+    background: var(--bg-glass);
+    border-radius: 20px;
+    margin-top: 30px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.participants-info {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.info-icon {
+    font-size: 1.2rem;
+}
+
+.info-item strong {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+.reset-button {
+    background: transparent;
+    border: 2px solid rgba(239, 68, 68, 0.5);
+    color: var(--danger);
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+}
+
+.reset-button:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--danger);
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   全屏庆祝特效
+   ========================================== */
+.celebration-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    animation: fade-in 0.3s ease-out;
+}
+
+.celebration-overlay.active {
+    display: flex;
+}
+
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.celebration-content {
+    text-align: center;
+}
+
+.big-winner-card {
+    background: linear-gradient(135deg, #1a1a3e 0%, #0d0d1a 100%);
+    border: 3px solid var(--gold);
+    border-radius: 30px;
+    padding: 50px 60px;
+    position: relative;
+    animation: celebration-pop 0.5s ease-out;
+    box-shadow: 0 0 100px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes celebration-pop {
+    0% { opacity: 0; transform: scale(0.5) rotate(-5deg); }
+    50% { transform: scale(1.05) rotate(2deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.sparkle-ring {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border: 3px solid transparent;
+    border-radius: 35px;
+    background: linear-gradient(var(--bg-dark), var(--bg-dark)) padding-box,
+                linear-gradient(45deg, var(--gold), var(--primary), var(--gold)) border-box;
+    animation: spin-slow 4s linear infinite;
+}
+
+@keyframes spin-slow {
+    to { transform: rotate(360deg); }
+}
+
+.winner-avatar {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    animation: bounce 1s ease infinite;
+}
+
+.congrats-text {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+.big-winner-name {
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold), #fff, var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+}
+
+.prize-won {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+}
+
+.prize-won .prize-name {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 10px;
+}
+
+.close-celebration {
+    margin-top: 30px;
+    background: linear-gradient(135deg, var(--gold), #f0c000);
+    border: none;
+    color: #1a1a1a;
+    padding: 15px 50px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.close-celebration:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+}
+
+/* ==========================================
+   响应式设计
+   ========================================== */
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .prizes-section,
+    .winners-section {
+        max-height: none;
+    }
+
+    .lottery-section {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .title-text {
+        font-size: 2rem;
+        letter-spacing: 4px;
+    }
+
+    .title-sub {
+        font-size: 0.9rem;
+        letter-spacing: 6px;
+    }
+
+    .lottery-machine {
+        padding: 20px;
+    }
+
+    .draw-button {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+    }
+
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .participants-info {
+        justify-content: center;
+    }
+
+    .big-winner-card {
+        padding: 30px 40px;
+        margin: 20px;
+    }
+
+    .big-winner-name {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title-text {
+        font-size: 1.5rem;
+    }
+
+    .prize-selector {
+        flex-direction: column;
+    }
+
+    .prize-select {
+        width: 100%;
+    }
+
+    .participants-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+/* ==========================================
+   特效动画补充
+   ========================================== */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    animation: confetti-fall 3s ease-in-out forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        opacity: 1;
+        transform: translateY(-100px) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(400px) rotate(720deg);
+    }
+}
+
+/* 禁用选中 */
+.draw-button,
+.prize-card,
+.winner-card {
+    user-select: none;
+}
