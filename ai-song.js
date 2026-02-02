@@ -146,6 +146,11 @@ class AISongService {
     async textToSpeech(text) {
         const { provider, apiKey, baseUrl, voice, model, speed } = this.config.tts;
         
+        // 如果没有配置API或选择浏览器原生TTS
+        if (provider === 'browser' || !apiKey || apiKey === 'your-api-key-here') {
+            return this.browserTTS(text, voice, speed);
+        }
+        
         let url, headers, body;
         
         switch (provider) {
@@ -283,9 +288,52 @@ class AISongService {
         }
     }
     
-    // 播放音频
+    // 停止播放
+    stopAudio() {
+        // 停止浏览器TTS
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+        
+        if (this.currentAudio) {
+            if (this.currentAudio.pause) {
+                this.currentAudio.pause();
+            }
+            if (this.currentAudio.currentTime !== undefined) {
+                this.currentAudio.currentTime = 0;
+            }
+            this.currentAudio = null;
+        }
+    }
+    
+    // 浏览器原生TTS（免费，无需API）
+    browserTTS(text, voice, speed) {
+        return new Promise((resolve, reject) => {
+            if (!('speechSynthesis' in window)) {
+                reject(new Error('浏览器不支持语音合成'));
+                return;
+            }
+            
+            // 创建一个假的音频URL，实际播放用speechSynthesis
+            const audioUrl = 'browser-tts://' + encodeURIComponent(text);
+            
+            // 存储TTS参数供播放时使用
+            this._browserTTSText = text;
+            this._browserTTSVoice = voice;
+            this._browserTTSSpeed = speed || 1;
+            
+            resolve(audioUrl);
+        });
+    }
+    
+    // 播放音频（支持浏览器TTS）
     playAudio(audioUrl) {
         this.stopAudio();
+        
+        // 检查是否是浏览器TTS
+        if (audioUrl && audioUrl.startsWith('browser-tts://')) {
+            return this.playBrowserTTS();
+        }
         
         this.currentAudio = new Audio(audioUrl);
         this.currentAudio.play().catch(error => {
@@ -295,13 +343,46 @@ class AISongService {
         return this.currentAudio;
     }
     
-    // 停止播放
-    stopAudio() {
-        if (this.currentAudio) {
-            this.currentAudio.pause();
-            this.currentAudio.currentTime = 0;
-            this.currentAudio = null;
+    // 播放浏览器原生TTS
+    playBrowserTTS() {
+        if (!('speechSynthesis' in window)) {
+            console.error('浏览器不支持语音合成');
+            return null;
         }
+        
+        // 停止之前的语音
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(this._browserTTSText);
+        utterance.lang = 'zh-CN';
+        utterance.rate = this._browserTTSSpeed || 1;
+        utterance.pitch = 1.1;  // 稍微提高音调，更欢快
+        
+        // 尝试选择中文语音
+        const voices = window.speechSynthesis.getVoices();
+        const chineseVoice = voices.find(v => v.lang.includes('zh') || v.lang.includes('CN'));
+        if (chineseVoice) {
+            utterance.voice = chineseVoice;
+        }
+        
+        // 创建一个模拟的audio对象来保持接口一致
+        this.currentAudio = {
+            utterance: utterance,
+            pause: () => window.speechSynthesis.pause(),
+            play: () => window.speechSynthesis.resume(),
+            onended: null,
+            _isPlaying: true
+        };
+        
+        utterance.onend = () => {
+            if (this.currentAudio && this.currentAudio.onended) {
+                this.currentAudio.onended();
+            }
+        };
+        
+        window.speechSynthesis.speak(utterance);
+        
+        return this.currentAudio;
     }
     
     // 备用歌词（当API调用失败时使用）

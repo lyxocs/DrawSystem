@@ -115,18 +115,19 @@ const AI_CONFIG = {
     
     // TTS语音合成配置 (用于唱歌)
     tts: {
-        // API提供商: 'openai', 'azure', 'elevenlabs', 'fish-audio', 'custom'
-        provider: 'openai',
-        // API密钥 (可与LLM共用或单独配置)
-        apiKey: 'your-api-key-here',
-        // API端点
-        baseUrl: 'https://api.openai.com/v1',
-        // 语音模型/声音ID
-        voice: 'alloy',
+        // API提供商: 'browser'(免费), 'openai', 'azure', 'elevenlabs', 'fish-audio', 'custom'
+        // 推荐使用 'browser' - 使用浏览器内置语音，完全免费无需配置
+        provider: 'browser',
+        // API密钥 (使用browser时无需配置)
+        apiKey: '',
+        // API端点 (使用browser时无需配置)
+        baseUrl: '',
+        // 语音 (browser模式会自动选择中文语音)
+        voice: 'zh-CN',
         // 模型名称
-        model: 'tts-1',
-        // 语速 (0.25-4.0)
-        speed: 1.1
+        model: '',
+        // 语速 (0.5-2.0)
+        speed: 1.0
     },
     
     // 歌词生成提示词模板
