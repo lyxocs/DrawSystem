@@ -28,22 +28,27 @@ class LotterySystem {
             resetButton: document.getElementById('resetButton'),
             celebrationOverlay: document.getElementById('celebrationOverlay'),
             closeCelebration: document.getElementById('closeCelebration'),
-            bigWinnerName: document.getElementById('bigWinnerName'),
+            bigWinnersList: document.getElementById('bigWinnersList'),
             bigPrizeName: document.getElementById('bigPrizeName'),
             currentWinner: document.getElementById('currentWinner'),
-            winnerName: document.getElementById('winnerName'),
+            winnersDisplay: document.getElementById('winnersDisplay'),
             winnerPrize: document.getElementById('winnerPrize'),
-            particles: document.getElementById('particles')
+            particles: document.getElementById('particles'),
+            drawCount: document.getElementById('drawCount'),
+            countMinus: document.getElementById('countMinus'),
+            countPlus: document.getElementById('countPlus')
         };
     }
     
     init() {
+        this.currentDrawCount = 1;
         this.renderPrizes();
         this.renderPrizeSelect();
         this.updateStats();
         this.bindEvents();
         this.initParticles();
         this.loadFromStorage();
+        this.validateDrawCount();
     }
     
     renderPrizes() {
@@ -91,6 +96,9 @@ class LotterySystem {
         const selectedLevel = parseInt(this.elements.prizeSelect.value);
         const prize = this.prizes.find(p => p.level === selectedLevel);
         this.elements.remainingCount.textContent = `剩余: ${prize ? prize.quantity : 0}`;
+        
+        // 同时验证抽取人数
+        this.validateDrawCount();
     }
     
     updateStats() {
@@ -109,6 +117,11 @@ class LotterySystem {
         this.elements.resetButton.addEventListener('click', () => this.resetLottery());
         this.elements.closeCelebration.addEventListener('click', () => this.closeCelebration());
         
+        // 抽取人数 +/- 按钮
+        this.elements.countMinus.addEventListener('click', () => this.adjustDrawCount(-1));
+        this.elements.countPlus.addEventListener('click', () => this.adjustDrawCount(1));
+        this.elements.drawCount.addEventListener('change', () => this.validateDrawCount());
+        
         this.elements.celebrationOverlay.addEventListener('click', (e) => {
             if (e.target === this.elements.celebrationOverlay) {
                 this.closeCelebration();
@@ -121,6 +134,32 @@ class LotterySystem {
                 this.startDraw();
             }
         });
+    }
+    
+    // 调整抽取人数
+    adjustDrawCount(delta) {
+        const input = this.elements.drawCount;
+        let value = parseInt(input.value) || 1;
+        value = Math.max(1, Math.min(10, value + delta));
+        input.value = value;
+        this.validateDrawCount();
+    }
+    
+    // 验证抽取人数
+    validateDrawCount() {
+        const input = this.elements.drawCount;
+        let value = parseInt(input.value) || 1;
+        
+        // 获取当前奖品剩余数量和参与者数量
+        const selectedLevel = parseInt(this.elements.prizeSelect.value);
+        const prize = this.prizes.find(p => p.level === selectedLevel);
+        const maxByPrize = prize ? prize.quantity : 1;
+        const maxByParticipants = this.participants.length;
+        const maxAllowed = Math.min(10, maxByPrize, maxByParticipants);
+        
+        value = Math.max(1, Math.min(maxAllowed, value));
+        input.value = value;
+        input.max = maxAllowed;
     }
     
     startDraw() {
@@ -143,6 +182,22 @@ class LotterySystem {
             return;
         }
         
+        // 获取抽取人数
+        this.validateDrawCount();
+        const drawCount = parseInt(this.elements.drawCount.value) || 1;
+        
+        // 检查是否有足够的奖品和参与者
+        if (drawCount > prize.quantity) {
+            this.showMessage(`该奖项仅剩 ${prize.quantity} 个`);
+            return;
+        }
+        
+        if (drawCount > this.participants.length) {
+            this.showMessage(`仅剩 ${this.participants.length} 位参与者`);
+            return;
+        }
+        
+        this.currentDrawCount = drawCount;
         this.isRolling = true;
         this.elements.drawButton.disabled = true;
         this.elements.drawButton.classList.add('rolling');
@@ -156,16 +211,29 @@ class LotterySystem {
         let rollCount = 0;
         const maxRolls = 30;
         const baseInterval = 50;
+        const drawCount = this.currentDrawCount || 1;
         
         const roll = () => {
             rollCount++;
             
-            const randomIndex = Math.floor(Math.random() * this.participants.length);
-            const randomName = this.participants[randomIndex].name;
+            // 显示多个随机名字
+            const displayNames = [];
+            for (let i = 0; i < Math.min(drawCount, this.participants.length); i++) {
+                const randomIndex = Math.floor(Math.random() * this.participants.length);
+                displayNames.push(this.participants[randomIndex].name);
+            }
             
-            this.elements.displayScreen.innerHTML = `
-                <div class="rolling-names">${randomName}</div>
-            `;
+            if (drawCount === 1) {
+                this.elements.displayScreen.innerHTML = `
+                    <div class="rolling-names">${displayNames[0]}</div>
+                `;
+            } else {
+                this.elements.displayScreen.innerHTML = `
+                    <div class="rolling-names-multi">
+                        ${displayNames.map(name => `<span>${name}</span>`).join('')}
+                    </div>
+                `;
+            }
             
             const progress = rollCount / maxRolls;
             const interval = baseInterval + (progress * progress * 200);
@@ -173,14 +241,15 @@ class LotterySystem {
             if (rollCount < maxRolls) {
                 setTimeout(roll, interval);
             } else {
-                this.determineWinner(prize);
+                this.determineWinners(prize, drawCount);
             }
         };
         
         roll();
     }
     
-    determineWinner(prize) {
+    // 根据权重选择单个中奖者
+    selectOneWinner() {
         const totalWeight = this.participants.reduce((sum, p) => sum + p.weight, 0);
         let random = Math.random() * totalWeight;
         
@@ -201,43 +270,80 @@ class LotterySystem {
             winner = this.participants[winnerIndex];
         }
         
+        // 从参与者列表中移除（不放回）
         this.participants.splice(winnerIndex, 1);
-        prize.quantity--;
         
-        const winnerRecord = {
-            name: winner.name,
-            prize: prize.name,
-            prizeName: prize.displayName,
-            prizeLevel: prize.level,
-            time: new Date().toLocaleTimeString()
-        };
-        this.winners.unshift(winnerRecord);
+        return winner;
+    }
+    
+    // 确定多个中奖者
+    determineWinners(prize, count) {
+        const winnerRecords = [];
+        const time = new Date().toLocaleTimeString();
         
-        this.showWinner(winnerRecord, prize);
+        for (let i = 0; i < count; i++) {
+            const winner = this.selectOneWinner();
+            prize.quantity--;
+            
+            const winnerRecord = {
+                name: winner.name,
+                prize: prize.name,
+                prizeName: prize.displayName,
+                prizeLevel: prize.level,
+                time: time
+            };
+            winnerRecords.push(winnerRecord);
+            this.winners.unshift(winnerRecord);
+        }
+        
+        this.showWinners(winnerRecords, prize);
         this.saveToStorage();
     }
     
-    showWinner(winnerRecord, prize) {
-        this.elements.displayScreen.innerHTML = `
-            <div class="winner-display">
-                <div class="name">${winnerRecord.name}</div>
-                <div class="prize">获得 ${prize.name} - ${prize.displayName}</div>
-            </div>
-        `;
+    // 显示多个中奖者
+    showWinners(winnerRecords, prize) {
+        const names = winnerRecords.map(w => w.name);
         
+        // 更新显示屏
+        if (names.length === 1) {
+            this.elements.displayScreen.innerHTML = `
+                <div class="winner-display">
+                    <div class="name">${names[0]}</div>
+                    <div class="prize">获得 ${prize.name} - ${prize.displayName}</div>
+                </div>
+            `;
+        } else {
+            this.elements.displayScreen.innerHTML = `
+                <div class="winner-display multi">
+                    <div class="names-grid">
+                        ${names.map(name => `<span class="name">${name}</span>`).join('')}
+                    </div>
+                    <div class="prize">获得 ${prize.name} - ${prize.displayName}</div>
+                </div>
+            `;
+        }
+        
+        // 显示中奖卡片
         const winnerCard = this.elements.currentWinner.querySelector('.winner-card');
         winnerCard.classList.remove('hidden');
-        this.elements.winnerName.textContent = winnerRecord.name;
+        
+        // 更新中奖者名字显示
+        this.elements.winnersDisplay.innerHTML = names.map((name, i) => `
+            <div class="winner-name-item" style="animation-delay: ${i * 0.1}s">${name}</div>
+        `).join('');
+        
         this.elements.winnerPrize.textContent = `${prize.name} - ${prize.displayName}`;
         
         this.renderPrizes();
         this.renderPrizeSelect();
         this.renderWinnersList();
         this.updateStats();
+        this.validateDrawCount();
         
+        // 如果是特等奖或一等奖，显示大型庆祝动画
         if (prize.level <= 2) {
             setTimeout(() => {
-                this.showCelebration(winnerRecord);
+                this.showCelebration(winnerRecords, prize);
             }, 500);
         }
         
@@ -249,9 +355,18 @@ class LotterySystem {
         this.elements.drawButton.querySelector('.button-text').textContent = '开始抽奖';
     }
     
-    showCelebration(winnerRecord) {
-        this.elements.bigWinnerName.textContent = winnerRecord.name;
-        this.elements.bigPrizeName.textContent = `${winnerRecord.prize} - ${winnerRecord.prizeName}`;
+    showCelebration(winnerRecords, prize) {
+        // 支持单个或多个中奖者
+        const records = Array.isArray(winnerRecords) ? winnerRecords : [winnerRecords];
+        const names = records.map(w => w.name);
+        
+        // 更新大奖名单显示
+        this.elements.bigWinnersList.innerHTML = names.map((name, i) => `
+            <div class="big-winner-name-item" style="animation-delay: ${i * 0.15}s">${name}</div>
+        `).join('');
+        
+        const prizeInfo = prize || records[0];
+        this.elements.bigPrizeName.textContent = `${prizeInfo.name || prizeInfo.prize} - ${prizeInfo.displayName || prizeInfo.prizeName}`;
         this.elements.celebrationOverlay.classList.add('active');
         
         // 第一波彩带 - 立即开始
@@ -368,6 +483,8 @@ class LotterySystem {
         
         this.elements.displayScreen.innerHTML = '<div class="waiting-text">准备抽奖</div>';
         this.elements.currentWinner.querySelector('.winner-card').classList.add('hidden');
+        this.elements.drawCount.value = 1;
+        this.validateDrawCount();
         
         this.showMessage('抽奖已重置');
     }

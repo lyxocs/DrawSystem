@@ -53,6 +53,16 @@
                         <span class="remaining" id="remainingCount">剩余: 0</span>
                     </div>
 
+                    <div class="draw-count-selector">
+                        <label for="drawCount">抽取人数：</label>
+                        <div class="count-input-group">
+                            <button class="count-btn minus" id="countMinus">−</button>
+                            <input type="number" id="drawCount" class="draw-count-input" value="1" min="1" max="10">
+                            <button class="count-btn plus" id="countPlus">+</button>
+                        </div>
+                        <span class="count-hint">人</span>
+                    </div>
+
                     <button class="draw-button" id="drawButton">
                         <span class="button-text">开始抽奖</span>
                         <span class="button-glow"></span>
@@ -68,7 +78,9 @@
                         <div class="confetti-container"></div>
                         <div class="winner-content">
                             <div class="winner-badge">🎉 恭喜中奖 🎉</div>
-                            <div class="winner-name" id="winnerName"></div>
+                            <div class="winners-display" id="winnersDisplay">
+                                <!-- 多人中奖名单将由JS动态生成 -->
+                            </div>
                             <div class="winner-prize" id="winnerPrize"></div>
                         </div>
                     </div>
@@ -113,7 +125,9 @@
                 <div class="winner-avatar" id="bigWinnerAvatar">🎊</div>
                 <div class="winner-details">
                     <div class="congrats-text">恭喜</div>
-                    <div class="big-winner-name" id="bigWinnerName"></div>
+                    <div class="big-winners-list" id="bigWinnersList">
+                        <!-- 多人大奖名单将由JS动态生成 -->
+                    </div>
                     <div class="prize-won">
                         <span>获得</span>
                         <span class="prize-name" id="bigPrizeName"></span>
