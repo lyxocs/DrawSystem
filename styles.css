@@ -795,21 +795,41 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.92);
     z-index: 1000;
     display: none;
     align-items: center;
     justify-content: center;
-    animation: fade-in 0.3s ease-out;
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
 }
 
 .celebration-overlay.active {
     display: flex;
+    animation: celebration-fade-in 0.4s ease-out forwards;
 }
 
-@keyframes fade-in {
+@keyframes celebration-fade-in {
     0% { opacity: 0; }
     100% { opacity: 1; }
+}
+
+/* 庆祝背景光效 */
+.celebration-overlay::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    animation: celebration-glow 2s ease-in-out infinite;
+}
+
+@keyframes celebration-glow {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
 }
 
 .celebration-content {
@@ -822,13 +842,17 @@ body {
     border-radius: 30px;
     padding: 50px 60px;
     position: relative;
-    animation: celebration-pop 0.5s ease-out;
-    box-shadow: 0 0 100px rgba(255, 215, 0, 0.3);
+    animation: celebration-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    box-shadow: 
+        0 0 100px rgba(255, 215, 0, 0.3),
+        0 25px 50px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: visible;
 }
 
 @keyframes celebration-pop {
     0% { opacity: 0; transform: scale(0.5) rotate(-5deg); }
-    50% { transform: scale(1.05) rotate(2deg); }
+    50% { opacity: 1; transform: scale(1.05) rotate(2deg); }
     100% { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 
@@ -843,6 +867,8 @@ body {
     background: linear-gradient(var(--bg-dark), var(--bg-dark)) padding-box,
                 linear-gradient(45deg, var(--gold), var(--primary), var(--gold)) border-box;
     animation: spin-slow 4s linear infinite;
+    z-index: -1;
+    pointer-events: none;
 }
 
 @keyframes spin-slow {
@@ -852,28 +878,45 @@ body {
 .winner-avatar {
     font-size: 5rem;
     margin-bottom: 20px;
-    animation: bounce 1s ease infinite;
+    animation: winner-avatar-bounce 0.8s ease infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+}
+
+@keyframes winner-avatar-bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    25% { transform: translateY(-15px) scale(1.1); }
+    50% { transform: translateY(0) scale(1); }
+    75% { transform: translateY(-8px) scale(1.05); }
 }
 
 .congrats-text {
     font-size: 1.5rem;
     color: var(--text-secondary);
     margin-bottom: 10px;
+    animation: fade-in-up 0.4s ease-out 0.1s both;
 }
 
 .big-winner-name {
     font-size: 3rem;
     font-weight: 900;
-    background: linear-gradient(135deg, var(--gold), #fff, var(--gold));
+    background: linear-gradient(90deg, var(--gold) 0%, #fff 25%, var(--gold) 50%, #fff 75%, var(--gold) 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-bottom: 20px;
+    animation: gold-shine 2s linear infinite;
+    filter: drop-shadow(0 2px 10px rgba(255, 215, 0, 0.3));
+}
+
+@keyframes gold-shine {
+    to { background-position: 200% center; }
 }
 
 .prize-won {
     font-size: 1.3rem;
     color: var(--text-secondary);
+    animation: fade-in-up 0.5s ease-out 0.3s both;
 }
 
 .prize-won .prize-name {
@@ -882,6 +925,12 @@ body {
     font-weight: 700;
     color: var(--primary);
     margin-top: 10px;
+    text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+}
+
+@keyframes fade-in-up {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 .close-celebration {
@@ -896,11 +945,31 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: inherit;
+    animation: fade-in-up 0.5s ease-out 0.5s both, button-pulse 2s ease-in-out 1s infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.close-celebration::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+    transform: rotate(45deg);
+    animation: button-shine 2s infinite;
+}
+
+@keyframes button-pulse {
+    0%, 100% { box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3); }
+    50% { box-shadow: 0 5px 30px rgba(255, 215, 0, 0.6); }
 }
 
 .close-celebration:hover {
     transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
 }
 
 @media (max-width: 1200px) {
@@ -986,16 +1055,23 @@ body {
     width: 10px;
     height: 10px;
     animation: confetti-fall 3s ease-in-out forwards;
+    pointer-events: none;
+}
+
+/* 全屏彩带效果 - 添加到body时 */
+body > .confetti {
+    position: fixed;
+    z-index: 1001;
 }
 
 @keyframes confetti-fall {
     0% {
         opacity: 1;
-        transform: translateY(-100px) rotate(0deg);
+        transform: translateY(0) rotate(0deg);
     }
     100% {
         opacity: 0;
-        transform: translateY(400px) rotate(720deg);
+        transform: translateY(100vh) rotate(720deg);
     }
 }
 

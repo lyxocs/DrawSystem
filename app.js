@@ -254,9 +254,24 @@ class LotterySystem {
         this.elements.bigPrizeName.textContent = `${winnerRecord.prize} - ${winnerRecord.prizeName}`;
         this.elements.celebrationOverlay.classList.add('active');
         
-        for (let i = 0; i < 50; i++) {
-            setTimeout(() => this.createConfetti(true), i * 50);
+        // 第一波彩带 - 立即开始
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => this.createConfetti(true), i * 40);
         }
+        
+        // 第二波彩带 - 1秒后
+        setTimeout(() => {
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => this.createConfetti(true), i * 50);
+            }
+        }, 1000);
+        
+        // 第三波彩带 - 2秒后
+        setTimeout(() => {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => this.createConfetti(true), i * 60);
+            }
+        }, 2000);
     }
     
     closeCelebration() {
@@ -299,24 +314,37 @@ class LotterySystem {
         for (let i = 0; i < count; i++) {
             const confetti = document.createElement('div');
             confetti.className = 'confetti';
-            confetti.style.cssText = `
-                left: ${Math.random() * 100}%;
-                top: ${Math.random() * 20}%;
-                background: ${colors[Math.floor(Math.random() * colors.length)]};
-                width: ${Math.random() * 10 + 5}px;
-                height: ${Math.random() * 10 + 5}px;
-                border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
-                animation-duration: ${Math.random() * 2 + 2}s;
-                animation-delay: ${Math.random() * 0.5}s;
-            `;
             
             if (intense) {
+                // 全屏彩带 - 从顶部随机位置落下
+                confetti.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    top: ${-Math.random() * 10}%;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    width: ${Math.random() * 12 + 6}px;
+                    height: ${Math.random() * 12 + 6}px;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                    animation-duration: ${Math.random() * 2 + 2.5}s;
+                    animation-delay: ${Math.random() * 0.3}s;
+                    box-shadow: 0 0 ${Math.random() * 10 + 5}px ${colors[Math.floor(Math.random() * colors.length)]};
+                `;
                 document.body.appendChild(confetti);
             } else {
+                // 局部彩带
+                confetti.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 20}%;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    width: ${Math.random() * 10 + 5}px;
+                    height: ${Math.random() * 10 + 5}px;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                    animation-duration: ${Math.random() * 2 + 2}s;
+                    animation-delay: ${Math.random() * 0.5}s;
+                `;
                 container.appendChild(confetti);
             }
             
-            setTimeout(() => confetti.remove(), 4000);
+            setTimeout(() => confetti.remove(), 5000);
         }
     }
     
