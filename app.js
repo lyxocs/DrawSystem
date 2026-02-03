@@ -105,7 +105,7 @@ class LotterySystem {
         const html = this.prizes
             .filter(prize => prize.quantity > 0)
             .map(prize => `
-                <option value="${prize.level}">${prize.name} - ${prize.displayName} (剩余${prize.quantity})</option>
+                <option value="${prize.level}">${prize.name} - ${prize.displayName}</option>
             `).join('');
         
         this.elements.prizeSelect.innerHTML = html || '<option value="">暂无可抽奖项</option>';
@@ -187,12 +187,9 @@ class LotterySystem {
         input.value = value;
         input.max = maxAllowed;
         
-        // 更新剩余人数显示（显示符合条件的人数）
+        // 更新剩余数量显示
         if (prize && this.elements.remainingCount) {
-            const poolInfo = prize.pools && prize.pools.length > 0 
-                ? ` (${this.getPoolNames(prize.pools)})` 
-                : '';
-            this.elements.remainingCount.textContent = `剩余: ${prize.quantity} | 可抽: ${maxByParticipants}人${poolInfo}`;
+            this.elements.remainingCount.textContent = `剩余: ${prize.quantity}`;
         }
     }
     

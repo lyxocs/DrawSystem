@@ -556,14 +556,21 @@ body {
     background: linear-gradient(180deg, rgba(100, 20, 20, 0.7) 0%, rgba(60, 10, 10, 0.9) 100%);
     border: 1px solid rgba(255, 150, 150, 0.3);
     border-radius: 12px;
-    padding: 14px 24px;
+    padding: 12px 24px 16px 24px;
     font-size: 1.1rem;
     color: var(--text-primary);
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 240px;
+    min-width: 320px;
+    max-width: 400px;
     font-family: inherit;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: visible;
+    line-height: 1.5;
+    height: 52px;
+    box-sizing: border-box;
+    vertical-align: middle;
 }
 
 .prize-select:hover, .prize-select:focus {
@@ -576,6 +583,8 @@ body {
 .prize-select option {
     background: #3a0a0a;
     color: var(--text-primary);
+    padding: 10px;
+    font-size: 1rem;
 }
 
 .remaining {
