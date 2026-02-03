@@ -175,16 +175,51 @@ class LotterySystem {
         const input = this.elements.drawCount;
         let value = parseInt(input.value) || 1;
         
-        // 获取当前奖品剩余数量和参与者数量
+        // 获取当前奖品剩余数量和符合条件的参与者数量
         const selectedLevel = parseInt(this.elements.prizeSelect.value);
         const prize = this.prizes.find(p => p.level === selectedLevel);
         const maxByPrize = prize ? prize.quantity : 1;
-        const maxByParticipants = this.participants.length;
+        const eligibleParticipants = prize ? this.getEligibleParticipants(prize) : this.participants;
+        const maxByParticipants = eligibleParticipants.length;
         const maxAllowed = Math.min(10, maxByPrize, maxByParticipants);
         
         value = Math.max(1, Math.min(maxAllowed, value));
         input.value = value;
         input.max = maxAllowed;
+        
+        // 更新剩余人数显示（显示符合条件的人数）
+        if (prize && this.elements.remainingCount) {
+            const poolInfo = prize.pools && prize.pools.length > 0 
+                ? ` (${this.getPoolNames(prize.pools)})` 
+                : '';
+            this.elements.remainingCount.textContent = `剩余: ${prize.quantity} | 可抽: ${maxByParticipants}人${poolInfo}`;
+        }
+    }
+    
+    // 获取奖品对应的池子名称
+    getPoolNames(poolIds) {
+        if (!poolIds || poolIds.length === 0) return '全员';
+        if (typeof POOLS_CONFIG === 'undefined') return '全员';
+        return poolIds.map(id => {
+            const pool = POOLS_CONFIG.find(p => p.id === id);
+            return pool ? pool.name : id;
+        }).join('/');
+    }
+    
+    // 根据奖品池获取符合条件的参与者
+    getEligibleParticipants(prize) {
+        // 如果奖品没有指定池子，返回所有参与者
+        if (!prize.pools || prize.pools.length === 0) {
+            return this.participants;
+        }
+        
+        // 筛选出属于指定池子的参与者
+        return this.participants.filter(participant => {
+            // 如果参与者没有指定池子，默认只属于"all"池
+            const participantPools = participant.pools || ['all'];
+            // 检查参与者的池子是否与奖品的池子有交集
+            return prize.pools.some(prizePool => participantPools.includes(prizePool));
+        });
     }
     
     startDraw() {
@@ -202,8 +237,12 @@ class LotterySystem {
             return;
         }
         
-        if (this.participants.length === 0) {
-            this.showMessage('没有剩余参与者');
+        // 获取符合条件的参与者
+        const eligibleParticipants = this.getEligibleParticipants(prize);
+        
+        if (eligibleParticipants.length === 0) {
+            const poolNames = this.getPoolNames(prize.pools);
+            this.showMessage(`没有符合条件的参与者 (${poolNames})`);
             return;
         }
         
@@ -217,7 +256,7 @@ class LotterySystem {
             return;
         }
         
-        if (drawCount > this.participants.length) {
+        if (drawCount > eligibleParticipants.length) {
             this.showMessage(`仅剩 ${this.participants.length} 位参与者`);
             return;
         }
@@ -238,14 +277,17 @@ class LotterySystem {
         const baseInterval = 50;
         const drawCount = this.currentDrawCount || 1;
         
+        // 获取符合条件的参与者用于滚动显示
+        const eligibleParticipants = this.getEligibleParticipants(prize);
+        
         const roll = () => {
             rollCount++;
             
-            // 显示多个随机名字
+            // 显示多个随机名字（从符合条件的参与者中选）
             const displayNames = [];
-            for (let i = 0; i < Math.min(drawCount, this.participants.length); i++) {
-                const randomIndex = Math.floor(Math.random() * this.participants.length);
-                displayNames.push(this.participants[randomIndex].name);
+            for (let i = 0; i < Math.min(drawCount, eligibleParticipants.length); i++) {
+                const randomIndex = Math.floor(Math.random() * eligibleParticipants.length);
+                displayNames.push(eligibleParticipants[randomIndex].name);
             }
             
             if (drawCount === 1) {
@@ -273,30 +315,37 @@ class LotterySystem {
         roll();
     }
     
-    // 根据权重选择单个中奖者
-    selectOneWinner() {
-        const totalWeight = this.participants.reduce((sum, p) => sum + p.weight, 0);
+    // 根据权重从符合条件的参与者中选择单个中奖者
+    selectOneWinner(prize) {
+        // 获取符合条件的参与者
+        const eligibleParticipants = this.getEligibleParticipants(prize);
+        
+        if (eligibleParticipants.length === 0) {
+            return null;
+        }
+        
+        const totalWeight = eligibleParticipants.reduce((sum, p) => sum + p.weight, 0);
         let random = Math.random() * totalWeight;
         
         let winner = null;
-        let winnerIndex = -1;
         
-        for (let i = 0; i < this.participants.length; i++) {
-            random -= this.participants[i].weight;
+        for (let i = 0; i < eligibleParticipants.length; i++) {
+            random -= eligibleParticipants[i].weight;
             if (random <= 0) {
-                winner = this.participants[i];
-                winnerIndex = i;
+                winner = eligibleParticipants[i];
                 break;
             }
         }
         
         if (!winner) {
-            winnerIndex = this.participants.length - 1;
-            winner = this.participants[winnerIndex];
+            winner = eligibleParticipants[eligibleParticipants.length - 1];
         }
         
-        // 从参与者列表中移除（不放回）
-        this.participants.splice(winnerIndex, 1);
+        // 从主参与者列表中移除（不放回）
+        const mainIndex = this.participants.findIndex(p => p.name === winner.name);
+        if (mainIndex !== -1) {
+            this.participants.splice(mainIndex, 1);
+        }
         
         return winner;
     }
@@ -307,7 +356,9 @@ class LotterySystem {
         const time = new Date().toLocaleTimeString();
         
         for (let i = 0; i < count; i++) {
-            const winner = this.selectOneWinner();
+            const winner = this.selectOneWinner(prize);
+            if (!winner) break; // 没有符合条件的参与者了
+            
             prize.quantity--;
             
             const winnerRecord = {
@@ -321,7 +372,9 @@ class LotterySystem {
             this.winners.unshift(winnerRecord);
         }
         
-        this.showWinners(winnerRecords, prize);
+        if (winnerRecords.length > 0) {
+            this.showWinners(winnerRecords, prize);
+        }
         this.saveToStorage();
     }
     

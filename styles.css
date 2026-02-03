@@ -40,7 +40,7 @@ html {
 }
 
 body {
-    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'ZCOOL XiaoWei', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
     background: #8b1a1a;
     background-image: 
         /* 左侧聚光灯 */
@@ -257,8 +257,8 @@ body {
 
 .title-text {
     display: block;
-    font-family: 'Ma Shan Zheng', 'Noto Sans SC', cursive;
-    font-size: 4rem;
+    font-family: 'ZCOOL KuaiLe', 'Ma Shan Zheng', cursive;
+    font-size: 4.5rem;
     font-weight: 400;
     background: linear-gradient(135deg, 
         #ffd700 0%, 
@@ -274,7 +274,7 @@ body {
     background-clip: text;
     animation: shine 3s linear infinite;
     filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
-    letter-spacing: 12px;
+    letter-spacing: 16px;
 }
 
 @keyframes shine {
@@ -433,12 +433,12 @@ body {
 }
 
 .waiting-text {
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 2.8rem;
+    font-family: 'ZCOOL KuaiLe', 'Ma Shan Zheng', cursive;
+    font-size: 3rem;
     color: #ffd700;
     text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.3);
     animation: flicker 2s infinite;
-    letter-spacing: 8px;
+    letter-spacing: 10px;
 }
 
 @keyframes flicker {
@@ -451,8 +451,9 @@ body {
 }
 
 .rolling-names {
-    font-size: 4rem;
-    font-weight: 900;
+    font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 400;
     color: #ffd700;
     text-shadow: 0 0 40px rgba(255, 215, 0, 0.5), 0 0 80px rgba(255, 215, 0, 0.3);
     animation: roll-text 0.08s steps(1) infinite;
@@ -467,14 +468,15 @@ body {
 }
 
 .rolling-names-multi span {
-    font-size: 2.5rem;
-    font-weight: 900;
+    font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 400;
     color: #ffd700;
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
     animation: roll-text 0.08s steps(1) infinite;
-    padding: 8px 20px;
+    padding: 10px 24px;
     background: rgba(255, 215, 0, 0.1);
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
@@ -543,9 +545,10 @@ body {
 
 .prize-selector label,
 .draw-count-selector label {
-    font-size: 1.15rem;
-    color: #ffcccc;
-    font-weight: 600;
+    font-family: 'ZCOOL XiaoWei', 'Noto Sans SC', sans-serif;
+    font-size: 1.2rem;
+    color: #ffdddd;
+    font-weight: 400;
     text-shadow: 0 0 10px rgba(255, 100, 100, 0.3);
 }
 
@@ -649,8 +652,9 @@ body {
 .draw-button {
     width: 100%;
     padding: 24px 50px;
-    font-size: 1.6rem;
-    font-weight: 800;
+    font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
     color: #fff;
     background: linear-gradient(135deg, #e53935 0%, #c62828 50%, #b71c1c 100%);
     border: none;
@@ -659,8 +663,7 @@ body {
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    font-family: inherit;
-    letter-spacing: 4px;
+    letter-spacing: 6px;
     box-shadow: 
         0 8px 30px rgba(229, 57, 53, 0.4),
         0 4px 15px rgba(0, 0, 0, 0.3),
@@ -754,8 +757,8 @@ body {
 }
 
 .winner-badge {
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 1.5rem;
+    font-family: 'ZCOOL KuaiLe', 'Ma Shan Zheng', cursive;
+    font-size: 1.6rem;
     color: var(--gold);
     margin-bottom: 20px;
     animation: bounce 0.6s ease infinite;
@@ -777,11 +780,12 @@ body {
 }
 
 .winner-name-item {
-    font-size: 2.4rem;
-    font-weight: 900;
+    font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 400;
     color: #ffd700;
     text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
-    padding: 12px 30px;
+    padding: 14px 35px;
     background: rgba(255, 215, 0, 0.1);
     border-radius: 15px;
     border: 1px solid rgba(255, 215, 0, 0.25);
@@ -969,8 +973,8 @@ body {
 }
 
 .congrats-text {
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 2rem;
+    font-family: 'ZCOOL KuaiLe', 'Ma Shan Zheng', cursive;
+    font-size: 2.2rem;
     color: var(--gold);
     margin-bottom: 15px;
     animation: fade-in-up 0.4s ease-out 0.1s both;
@@ -987,8 +991,9 @@ body {
 }
 
 .big-winner-name-item {
-    font-size: 2.5rem;
-    font-weight: 900;
+    font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+    font-size: 3rem;
+    font-weight: 400;
     background: linear-gradient(90deg, var(--gold) 0%, #fff 25%, var(--gold) 50%, #fff 75%, var(--gold) 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
@@ -996,7 +1001,7 @@ body {
     background-clip: text;
     animation: gold-shine 2s linear infinite, winner-pop 0.5s ease-out backwards;
     filter: drop-shadow(0 2px 15px rgba(255, 215, 0, 0.5));
-    padding: 5px 15px;
+    padding: 8px 20px;
 }
 
 @keyframes gold-shine {

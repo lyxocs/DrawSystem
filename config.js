@@ -1,42 +1,79 @@
 ﻿/**
  * 抽奖系统配置文件
- * 包含参与者信息和奖品信息
+ * 包含参与者信息、奖品信息和分池配置
  */
 
-// 参与者配置 - 包含姓名和中奖权重
-// 权重越高，中奖概率越大（相对概率）
-const PARTICIPANTS_CONFIG = [
-    { name: "张三", weight: 1 },
-    { name: "李四", weight: 1.5 },
-    { name: "王五", weight: 1 },
-    { name: "赵六", weight: 2 },
-    { name: "钱七", weight: 1 },
-    { name: "孙八", weight: 1.2 },
-    { name: "周九", weight: 1 },
-    { name: "吴十", weight: 1.8 },
-    { name: "郑十一", weight: 1 },
-    { name: "王十二", weight: 1.3 },
-    { name: "冯十三", weight: 1 },
-    { name: "陈十四", weight: 1.5 },
-    { name: "褚十五", weight: 1 },
-    { name: "卫十六", weight: 1.1 },
-    { name: "蒋十七", weight: 1 },
-    { name: "沈十八", weight: 1.4 },
-    { name: "韩十九", weight: 1 },
-    { name: "杨二十", weight: 1.6 },
-    { name: "朱廿一", weight: 1 },
-    { name: "秦廿二", weight: 1.2 },
-    { name: "尤廿三", weight: 1 },
-    { name: "许廿四", weight: 1.3 },
-    { name: "何廿五", weight: 1 },
-    { name: "吕廿六", weight: 1.7 },
-    { name: "施廿七", weight: 1 },
-    { name: "张廿八", weight: 1.1 },
-    { name: "孔廿九", weight: 1 },
-    { name: "曹三十", weight: 1.5 },
+// ==========================================
+// 抽奖池配置 - 定义不同的抽奖池
+// ==========================================
+// 说明：通过抽奖池可以实现分组抽奖
+// - 每个参与者可以属于一个或多个池子
+// - 每个奖品可以指定从哪些池子中抽取
+// - 如果奖品未指定池子，则从所有参与者中抽取
+// - 如果参与者未指定池子，则只能参与未指定池子的奖品抽取
+const POOLS_CONFIG = [
+    { id: "all", name: "全员池", description: "所有人都可参与" },
+    { id: "manager", name: "管理层", description: "经理及以上级别" },
+    { id: "employee", name: "普通员工", description: "普通员工" },
+    { id: "newbie", name: "新人池", description: "入职一年内的新员工" },
+    { id: "veteran", name: "老员工池", description: "入职三年以上的老员工" },
 ];
 
-// 奖品配置 - 包含等级、数量、图片路径、名称
+// ==========================================
+// 参与者配置
+// ==========================================
+// name: 姓名
+// weight: 中奖权重（权重越高，中奖概率越大）
+// pools: 所属池子ID数组（可选，不填则默认只参与"all"池）
+const PARTICIPANTS_CONFIG = [
+    // 管理层
+    { name: "张总", weight: 1, pools: ["all", "manager"] },
+    { name: "李总", weight: 1, pools: ["all", "manager"] },
+    { name: "王经理", weight: 1, pools: ["all", "manager"] },
+    
+    // 老员工
+    { name: "赵六", weight: 1, pools: ["all", "employee", "veteran"] },
+    { name: "钱七", weight: 1, pools: ["all", "employee", "veteran"] },
+    { name: "孙八", weight: 1, pools: ["all", "employee", "veteran"] },
+    { name: "周九", weight: 1, pools: ["all", "employee", "veteran"] },
+    { name: "吴十", weight: 1, pools: ["all", "employee", "veteran"] },
+    
+    // 普通员工
+    { name: "郑十一", weight: 1, pools: ["all", "employee"] },
+    { name: "王十二", weight: 1, pools: ["all", "employee"] },
+    { name: "冯十三", weight: 1, pools: ["all", "employee"] },
+    { name: "陈十四", weight: 1, pools: ["all", "employee"] },
+    { name: "褚十五", weight: 1, pools: ["all", "employee"] },
+    { name: "卫十六", weight: 1, pools: ["all", "employee"] },
+    { name: "蒋十七", weight: 1, pools: ["all", "employee"] },
+    { name: "沈十八", weight: 1, pools: ["all", "employee"] },
+    
+    // 新员工
+    { name: "韩十九", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "杨二十", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "朱廿一", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "秦廿二", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "尤廿三", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "许廿四", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "何廿五", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "吕廿六", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "施廿七", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "张廿八", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "孔廿九", weight: 1, pools: ["all", "employee", "newbie"] },
+    { name: "曹三十", weight: 1, pools: ["all", "employee", "newbie"] },
+];
+
+// ==========================================
+// 奖品配置
+// ==========================================
+// level: 奖品等级（数字越小越高级）
+// name: 奖品名称
+// displayName: 显示名称
+// quantity: 数量
+// image: 图片路径
+// description: 描述
+// color: 主题色
+// pools: 可抽取的池子ID数组（可选，不填则从所有参与者中抽取）
 const PRIZES_CONFIG = [
     {
         level: 1,
@@ -45,7 +82,8 @@ const PRIZES_CONFIG = [
         quantity: 1,
         image: "images/prize1.png",
         description: "苹果最新旗舰手机",
-        color: "#FFD700"
+        color: "#FFD700",
+        pools: ["all"]  // 全员可抽
     },
     {
         level: 2,
@@ -54,7 +92,8 @@ const PRIZES_CONFIG = [
         quantity: 2,
         image: "images/prize2.png",
         description: "高性能平板电脑",
-        color: "#C0C0C0"
+        color: "#C0C0C0",
+        pools: ["employee"]  // 仅员工可抽
     },
     {
         level: 3,
@@ -63,7 +102,8 @@ const PRIZES_CONFIG = [
         quantity: 3,
         image: "images/prize3.png",
         description: "主动降噪无线耳机",
-        color: "#CD7F32"
+        color: "#CD7F32",
+        pools: ["all"]  // 全员可抽
     },
     {
         level: 4,
@@ -72,16 +112,28 @@ const PRIZES_CONFIG = [
         quantity: 5,
         image: "images/prize4.png",
         description: "智能运动手环",
-        color: "#E8E8E8"
+        color: "#E8E8E8",
+        pools: ["veteran", "newbie"]  // 老员工和新员工可抽
     },
     {
         level: 5,
-        name: "参与奖",
-        displayName: "定制U盘",
-        quantity: 10,
+        name: "新人专属奖",
+        displayName: "定制礼盒",
+        quantity: 5,
         image: "images/prize5.png",
-        description: "64GB高速U盘",
-        color: "#87CEEB"
+        description: "新年定制礼盒套装",
+        color: "#FF6B6B",
+        pools: ["newbie"]  // 仅新人可抽
+    },
+    {
+        level: 6,
+        name: "管理层专属",
+        displayName: "高端红酒",
+        quantity: 3,
+        image: "images/prize6.png",
+        description: "法国进口红酒",
+        color: "#8B0000",
+        pools: ["manager"]  // 仅管理层可抽
     }
 ];
 
@@ -161,5 +213,5 @@ const AI_CONFIG = {
 
 // 导出配置
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { PARTICIPANTS_CONFIG, PRIZES_CONFIG, SYSTEM_CONFIG, AI_CONFIG };
+    module.exports = { POOLS_CONFIG, PARTICIPANTS_CONFIG, PRIZES_CONFIG, SYSTEM_CONFIG, AI_CONFIG };
 }
