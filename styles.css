@@ -41,12 +41,22 @@ html {
 
 body {
     font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--bg-dark);
+    background: #8b1a1a;
     background-image: 
-        radial-gradient(ellipse at center 30%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
-        radial-gradient(ellipse at top, rgba(220, 38, 38, 0.4) 0%, transparent 45%),
-        radial-gradient(ellipse at bottom, rgba(153, 27, 27, 0.5) 0%, transparent 45%),
-        linear-gradient(180deg, #2a0808 0%, #1a0505 30%, #0d0000 50%, #1a0505 70%, #2a0808 100%);
+        /* 左侧聚光灯 */
+        radial-gradient(ellipse 40% 80% at 10% 0%, rgba(255, 200, 200, 0.35) 0%, transparent 60%),
+        /* 右侧聚光灯 */
+        radial-gradient(ellipse 40% 80% at 90% 0%, rgba(255, 200, 200, 0.35) 0%, transparent 60%),
+        /* 中央舞台光 */
+        radial-gradient(ellipse 60% 40% at 50% 85%, rgba(255, 150, 150, 0.4) 0%, transparent 70%),
+        /* 星光点缀 */
+        radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 80% 25%, rgba(255, 215, 0, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 50% 20%, rgba(255, 100, 150, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 30% 40%, rgba(255, 100, 150, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 70% 35%, rgba(255, 100, 150, 0.3) 0%, transparent 2%),
+        /* 底部渐变 */
+        linear-gradient(180deg, #6b1515 0%, #8b1a1a 30%, #7a1818 60%, #5a1010 100%);
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
@@ -215,17 +225,17 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
-    height: 280px;
-    background: radial-gradient(ellipse, rgba(255, 50, 50, 0.5) 0%, rgba(255, 215, 0, 0.3) 35%, transparent 65%);
-    opacity: 0.7;
-    filter: blur(60px);
+    width: 500px;
+    height: 250px;
+    background: radial-gradient(ellipse, rgba(255, 215, 0, 0.3) 0%, rgba(255, 150, 150, 0.2) 40%, transparent 70%);
+    opacity: 0.6;
+    filter: blur(50px);
     animation: pulse-glow 3s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {
-    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-    50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.15); }
+    0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 .fortune-text {
@@ -252,23 +262,23 @@ body {
     font-weight: 400;
     background: linear-gradient(135deg, 
         #ffd700 0%, 
-        #fff 15%, 
-        #ffd700 30%, 
-        #ff6b6b 50%, 
-        #ffd700 70%, 
-        #fff 85%, 
+        #ffeb3b 20%, 
+        #ffd700 40%, 
+        #fff 50%, 
+        #ffd700 60%, 
+        #ffeb3b 80%, 
         #ffd700 100%);
-    background-size: 300% auto;
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: shine 4s linear infinite;
-    filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 60px rgba(255, 50, 50, 0.3));
+    animation: shine 3s linear infinite;
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
     letter-spacing: 12px;
 }
 
 @keyframes shine {
-    to { background-position: 300% center; }
+    to { background-position: 200% center; }
 }
 
 .title-sub {
@@ -314,27 +324,26 @@ body {
 }
 
 .lottery-machine {
-    background: linear-gradient(180deg, rgba(180, 30, 30, 0.85) 0%, rgba(100, 15, 15, 0.95) 50%, rgba(50, 5, 5, 0.98) 100%);
+    background: linear-gradient(180deg, rgba(120, 25, 25, 0.9) 0%, rgba(80, 15, 15, 0.95) 50%, rgba(50, 10, 10, 0.98) 100%);
     border-radius: 30px;
     padding: 40px 50px;
     width: 100%;
-    border: 4px solid var(--gold);
+    border: 2px solid rgba(255, 150, 150, 0.3);
     box-shadow: 
-        0 0 80px rgba(255, 215, 0, 0.4),
-        0 0 150px rgba(220, 38, 38, 0.3),
-        0 20px 60px rgba(0, 0, 0, 0.6),
-        inset 0 2px 0 rgba(255, 215, 0, 0.3),
-        inset 0 -8px 40px rgba(0, 0, 0, 0.4);
+        0 0 60px rgba(255, 100, 100, 0.2),
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 200, 200, 0.1),
+        inset 0 -8px 40px rgba(0, 0, 0, 0.3);
     position: relative;
 }
 
 /* 四角装饰 */
 .lottery-machine::before,
 .lottery-machine::after {
-    content: '🎐';
+    content: '✨';
     position: absolute;
-    font-size: 2rem;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+    font-size: 1.5rem;
+    opacity: 0.8;
 }
 
 .lottery-machine::before {
@@ -385,15 +394,14 @@ body {
 }
 
 .display-screen {
-    background: #000;
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 24px;
     padding: 6px;
     margin-bottom: 30px;
-    border: 5px solid var(--gold-dark);
+    border: 2px solid rgba(255, 150, 150, 0.2);
     box-shadow: 
-        inset 0 8px 40px rgba(0, 0, 0, 0.9),
-        0 0 30px rgba(255, 215, 0, 0.3),
-        0 0 60px rgba(220, 38, 38, 0.2);
+        inset 0 8px 40px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(255, 50, 50, 0.15);
 }
 
 .screen-inner {
@@ -427,8 +435,8 @@ body {
 .waiting-text {
     font-family: 'Ma Shan Zheng', cursive;
     font-size: 2.8rem;
-    color: var(--gold);
-    text-shadow: 0 0 40px var(--gold), 0 0 80px rgba(255, 215, 0, 0.5);
+    color: #ffd700;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.3);
     animation: flicker 2s infinite;
     letter-spacing: 8px;
 }
@@ -436,17 +444,17 @@ body {
 @keyframes flicker {
     0%, 100% { opacity: 1; }
     92% { opacity: 1; }
-    93% { opacity: 0.5; }
+    93% { opacity: 0.6; }
     94% { opacity: 1; }
-    96% { opacity: 0.7; }
+    96% { opacity: 0.8; }
     97% { opacity: 1; }
 }
 
 .rolling-names {
     font-size: 4rem;
     font-weight: 900;
-    color: var(--gold);
-    text-shadow: 0 0 50px var(--gold), 0 0 100px rgba(255, 215, 0, 0.6);
+    color: #ffd700;
+    text-shadow: 0 0 40px rgba(255, 215, 0, 0.5), 0 0 80px rgba(255, 215, 0, 0.3);
     animation: roll-text 0.08s steps(1) infinite;
 }
 
@@ -461,13 +469,13 @@ body {
 .rolling-names-multi span {
     font-size: 2.5rem;
     font-weight: 900;
-    color: var(--gold);
-    text-shadow: 0 0 30px var(--gold);
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
     animation: roll-text 0.08s steps(1) infinite;
     padding: 8px 20px;
-    background: rgba(255, 215, 0, 0.15);
+    background: rgba(255, 215, 0, 0.1);
     border-radius: 10px;
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 @keyframes roll-text {
@@ -527,23 +535,23 @@ body {
     margin-bottom: 15px;
     flex-wrap: wrap;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.25);
     padding: 15px 25px;
     border-radius: 15px;
-    border: 1px solid rgba(255, 215, 0, 0.2);
+    border: 1px solid rgba(255, 150, 150, 0.15);
 }
 
 .prize-selector label,
 .draw-count-selector label {
     font-size: 1.15rem;
-    color: var(--gold);
+    color: #ffcccc;
     font-weight: 600;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 10px rgba(255, 100, 100, 0.3);
 }
 
 .prize-select {
-    background: linear-gradient(180deg, rgba(180, 30, 30, 0.6) 0%, rgba(100, 15, 15, 0.8) 100%);
-    border: 2px solid var(--gold);
+    background: linear-gradient(180deg, rgba(100, 20, 20, 0.7) 0%, rgba(60, 10, 10, 0.9) 100%);
+    border: 1px solid rgba(255, 150, 150, 0.3);
     border-radius: 12px;
     padding: 14px 24px;
     font-size: 1.1rem;
@@ -556,26 +564,25 @@ body {
 }
 
 .prize-select:hover, .prize-select:focus {
-    border-color: var(--gold);
+    border-color: rgba(255, 180, 180, 0.5);
     outline: none;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-    background: linear-gradient(180deg, rgba(200, 40, 40, 0.7) 0%, rgba(120, 20, 20, 0.9) 100%);
+    box-shadow: 0 0 20px rgba(255, 100, 100, 0.3);
+    background: linear-gradient(180deg, rgba(120, 25, 25, 0.8) 0%, rgba(80, 15, 15, 0.95) 100%);
 }
 
 .prize-select option {
-    background: var(--bg-dark);
+    background: #3a0a0a;
     color: var(--text-primary);
 }
 
 .remaining {
     font-size: 1.05rem;
-    color: var(--gold);
+    color: #ffdddd;
     font-weight: 700;
-    background: linear-gradient(180deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
+    background: rgba(255, 100, 100, 0.15);
     padding: 10px 20px;
     border-radius: 25px;
-    border: 2px solid rgba(255, 215, 0, 0.4);
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    border: 1px solid rgba(255, 150, 150, 0.25);
 }
 
 /* 抽取人数选择器 */
@@ -593,14 +600,14 @@ body {
     height: 45px;
     background: transparent;
     border: none;
-    color: var(--gold);
+    color: #ffcccc;
     font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .count-btn:hover {
-    background: rgba(255, 215, 0, 0.2);
+    background: rgba(255, 150, 150, 0.2);
 }
 
 .count-btn:active {
@@ -612,9 +619,9 @@ body {
     height: 45px;
     background: transparent;
     border: none;
-    border-left: 1px solid rgba(255, 215, 0, 0.3);
-    border-right: 1px solid rgba(255, 215, 0, 0.3);
-    color: var(--gold);
+    border-left: 1px solid rgba(255, 150, 150, 0.25);
+    border-right: 1px solid rgba(255, 150, 150, 0.25);
+    color: #ffdddd;
     font-size: 1.3rem;
     font-weight: 700;
     text-align: center;
@@ -630,90 +637,83 @@ body {
 
 .draw-count-input:focus {
     outline: none;
-    background: rgba(255, 215, 0, 0.1);
+    background: rgba(255, 100, 100, 0.1);
 }
 
 .count-hint {
     font-size: 1rem;
-    color: var(--gold);
+    color: #ffcccc;
 }
 
 /* 抽奖按钮 - 新年风格 */
 .draw-button {
     width: 100%;
-    padding: 26px 50px;
-    font-size: 1.8rem;
+    padding: 24px 50px;
+    font-size: 1.6rem;
     font-weight: 800;
-    color: var(--bg-dark);
-    background: linear-gradient(135deg, #ffd700 0%, #ffed4a 25%, #ffd700 50%, #f0c000 75%, #ffd700 100%);
-    background-size: 200% 100%;
+    color: #fff;
+    background: linear-gradient(135deg, #e53935 0%, #c62828 50%, #b71c1c 100%);
     border: none;
-    border-radius: 20px;
+    border-radius: 18px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
     font-family: inherit;
-    letter-spacing: 6px;
+    letter-spacing: 4px;
     box-shadow: 
-        0 8px 40px rgba(255, 215, 0, 0.5),
-        0 0 60px rgba(255, 215, 0, 0.3),
-        inset 0 2px 0 rgba(255, 255, 255, 0.3);
-    animation: button-shine 3s ease-in-out infinite;
-}
-
-@keyframes button-shine {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+        0 8px 30px rgba(229, 57, 53, 0.4),
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .draw-button:hover:not(:disabled) {
-    transform: translateY(-4px) scale(1.02);
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #ef5350 0%, #e53935 50%, #c62828 100%);
     box-shadow: 
-        0 20px 60px rgba(255, 215, 0, 0.6),
-        0 0 80px rgba(255, 215, 0, 0.4);
+        0 12px 40px rgba(229, 57, 53, 0.5),
+        0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .draw-button:active:not(:disabled) {
-    transform: translateY(-2px) scale(1.01);
+    transform: translateY(-1px);
 }
 
 .draw-button:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
-    animation: none;
+    background: linear-gradient(135deg, #666 0%, #444 100%);
 }
 
 .draw-button .button-glow {
     position: absolute;
     top: -50%;
-    left: -50%;
-    width: 200%;
+    left: -100%;
+    width: 50%;
     height: 200%;
     background: linear-gradient(
-        45deg,
-        transparent 30%,
-        rgba(255, 255, 255, 0.5) 50%,
-        transparent 70%
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
     );
-    transform: rotate(45deg);
-    animation: button-shine 2.5s infinite;
+    animation: button-glow-sweep 3s ease-in-out infinite;
 }
 
-@keyframes button-shine {
-    0% { transform: translateX(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) rotate(45deg); }
+@keyframes button-glow-sweep {
+    0% { left: -100%; }
+    50%, 100% { left: 150%; }
 }
 
 .draw-button.rolling {
     animation: pulse-button 0.5s ease-in-out infinite;
-    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
-    color: white;
+    background: linear-gradient(135deg, #ff5722 0%, #e64a19 50%, #d84315 100%);
 }
 
 @keyframes pulse-button {
-    0%, 100% { box-shadow: 0 0 30px var(--red); }
-    50% { box-shadow: 0 0 50px var(--red), 0 0 80px rgba(220, 38, 38, 0.5); }
+    0%, 100% { box-shadow: 0 0 30px rgba(255, 87, 34, 0.5); }
+    50% { box-shadow: 0 0 50px rgba(255, 87, 34, 0.7), 0 0 80px rgba(255, 87, 34, 0.4); }
 }
 
 .machine-base {
@@ -731,8 +731,8 @@ body {
 }
 
 .winner-card {
-    background: linear-gradient(135deg, rgba(180, 30, 30, 0.85) 0%, rgba(100, 15, 15, 0.9) 50%, rgba(50, 5, 5, 0.95) 100%);
-    border: 4px solid var(--gold);
+    background: linear-gradient(135deg, rgba(120, 25, 25, 0.9) 0%, rgba(80, 15, 15, 0.95) 50%, rgba(40, 5, 5, 0.98) 100%);
+    border: 2px solid rgba(255, 150, 150, 0.3);
     border-radius: 28px;
     padding: 40px;
     text-align: center;
@@ -740,9 +740,8 @@ body {
     overflow: hidden;
     animation: winner-card-appear 0.5s ease-out;
     box-shadow: 
-        0 0 60px rgba(255, 215, 0, 0.4),
-        0 0 100px rgba(220, 38, 38, 0.3),
-        inset 0 0 60px rgba(255, 215, 0, 0.1);
+        0 0 50px rgba(255, 50, 50, 0.2),
+        0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 .winner-card.hidden {
@@ -780,12 +779,12 @@ body {
 .winner-name-item {
     font-size: 2.4rem;
     font-weight: 900;
-    color: var(--gold);
-    text-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+    color: #ffd700;
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
     padding: 12px 30px;
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
+    background: rgba(255, 215, 0, 0.1);
     border-radius: 15px;
-    border: 2px solid rgba(255, 215, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.25);
     animation: winner-pop 0.5s ease-out backwards;
 }
 

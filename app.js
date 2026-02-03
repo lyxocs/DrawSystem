@@ -708,7 +708,7 @@ class LotterySystem {
         const particleCount = 80;
         
         // 新年喜庆色：红色和金色
-        const festiveColors = ['#dc2626', '#ffd700', '#ef4444', '#f59e0b', '#b91c1c'];
+        const festiveColors = ['#ffd700', '#ffcc00', '#ff9999', '#ffaaaa', '#ffddaa'];
         
         for (let i = 0; i < particleCount; i++) {
             particles.push({
