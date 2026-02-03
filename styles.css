@@ -1,25 +1,31 @@
-﻿/* 抽奖系统 - 现代炫酷风格样式 */
+﻿/* ==========================================
+   新年抽奖系统 - 喜庆红金主题
+   ========================================== */
 
+/* CSS变量定义 - 新年喜庆色 */
 :root {
-    --primary: #667eea;
-    --primary-dark: #5a67d8;
-    --secondary: #764ba2;
-    --accent: #f093fb;
+    --primary: #dc2626;
+    --primary-dark: #b91c1c;
+    --secondary: #fbbf24;
+    --accent: #f59e0b;
     --gold: #ffd700;
-    --silver: #c0c0c0;
-    --bronze: #cd7f32;
-    --bg-dark: #0f0f23;
-    --bg-card: rgba(255, 255, 255, 0.03);
-    --bg-glass: rgba(255, 255, 255, 0.08);
+    --gold-dark: #d4a500;
+    --red: #dc2626;
+    --red-dark: #991b1b;
+    --red-light: #fecaca;
+    --bg-dark: #1a0a0a;
+    --bg-card: rgba(220, 38, 38, 0.1);
+    --bg-glass: rgba(255, 215, 0, 0.08);
     --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-muted: rgba(255, 255, 255, 0.5);
-    --border-glow: rgba(102, 126, 234, 0.5);
-    --shadow-color: rgba(102, 126, 234, 0.3);
-    --success: #10b981;
+    --text-secondary: rgba(255, 255, 255, 0.85);
+    --text-muted: rgba(255, 255, 255, 0.6);
+    --border-glow: rgba(255, 215, 0, 0.5);
+    --shadow-color: rgba(220, 38, 38, 0.4);
+    --success: #22c55e;
     --danger: #ef4444;
 }
 
+/* 基础重置 */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -34,12 +40,17 @@ html {
 body {
     font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg-dark);
+    background-image: 
+        radial-gradient(ellipse at top, rgba(220, 38, 38, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom, rgba(153, 27, 27, 0.4) 0%, transparent 50%),
+        linear-gradient(180deg, #1a0505 0%, #0d0000 50%, #1a0505 100%);
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
 }
 
+/* 粒子背景画布 */
 #particles {
     position: fixed;
     top: 0;
@@ -50,20 +61,94 @@ body {
     pointer-events: none;
 }
 
+/* ==========================================
+   新年装饰元素
+   ========================================== */
+.festive-decorations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.lantern {
+    position: absolute;
+    font-size: 4rem;
+    animation: lantern-swing 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 100, 0, 0.6));
+}
+
+.lantern-left {
+    top: 10px;
+    left: 30px;
+    animation-delay: 0s;
+}
+
+.lantern-right {
+    top: 10px;
+    right: 30px;
+    animation-delay: 0.5s;
+}
+
+@keyframes lantern-swing {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+.firework {
+    position: absolute;
+    font-size: 2.5rem;
+    animation: firework-burst 2s ease-out infinite;
+    opacity: 0;
+}
+
+.firework-1 {
+    top: 15%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.firework-2 {
+    top: 20%;
+    right: 15%;
+    animation-delay: 0.7s;
+}
+
+.firework-3 {
+    top: 25%;
+    left: 20%;
+    animation-delay: 1.4s;
+}
+
+@keyframes firework-burst {
+    0% { transform: scale(0); opacity: 0; }
+    20% { transform: scale(1.2); opacity: 1; }
+    40% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* 主容器 */
 .container {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    max-width: 1800px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
+/* ==========================================
+   头部区域 - 新年风格
+   ========================================== */
 .header {
     text-align: center;
-    padding: 30px 20px 40px;
+    padding: 20px 20px 30px;
     position: relative;
 }
 
@@ -77,17 +162,28 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
-    height: 200px;
-    background: radial-gradient(ellipse, var(--primary) 0%, transparent 70%);
-    opacity: 0.3;
-    filter: blur(40px);
+    width: 500px;
+    height: 250px;
+    background: radial-gradient(ellipse, rgba(220, 38, 38, 0.4) 0%, rgba(255, 215, 0, 0.2) 40%, transparent 70%);
+    opacity: 0.6;
+    filter: blur(50px);
     animation: pulse-glow 3s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {
-    0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-    50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
+    0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+.fortune-text {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    animation: fortune-bounce 1s ease infinite;
+}
+
+@keyframes fortune-bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 .title {
@@ -97,15 +193,16 @@ body {
 
 .title-text {
     display: block;
-    font-size: 3rem;
-    font-weight: 900;
+    font-family: 'Ma Shan Zheng', 'Noto Sans SC', cursive;
+    font-size: 3.5rem;
+    font-weight: 400;
     background: linear-gradient(135deg, var(--gold) 0%, #fff 30%, var(--gold) 50%, #fff 70%, var(--gold) 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: shine 3s linear infinite;
-    text-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
     letter-spacing: 8px;
 }
 
@@ -115,254 +212,120 @@ body {
 
 .title-sub {
     display: block;
-    font-family: 'Orbitron', monospace;
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--text-secondary);
-    letter-spacing: 12px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 8px;
     margin-top: 10px;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
+/* ==========================================
+   主内容区域 - 居中布局
+   ========================================== */
 .main-content {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr;
-    gap: 30px;
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 20px 0;
 }
 
-.section-header {
-    margin-bottom: 20px;
-}
-
-.section-header h2 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--text-primary);
+.main-content.centered {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid var(--bg-glass);
-    position: relative;
-}
-
-.section-header h2::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-}
-
-.icon {
-    font-size: 1.4rem;
-}
-
-.prizes-section {
-    background: var(--bg-glass);
-    border-radius: 24px;
-    padding: 25px;
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    height: fit-content;
-}
-
-.prizes-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-height: 550px;
-    overflow-y: auto;
-    padding-right: 10px;
-}
-
-.prizes-grid::-webkit-scrollbar {
-    width: 6px;
-}
-
-.prizes-grid::-webkit-scrollbar-track {
-    background: var(--bg-card);
-    border-radius: 3px;
-}
-
-.prizes-grid::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 3px;
-}
-
-.prize-card {
-    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 255, 255, 0.02) 100%);
-    border-radius: 16px;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-
-.prize-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--prize-color, var(--primary));
-    opacity: 0.8;
-}
-
-.prize-card:hover {
-    transform: translateX(5px);
-    border-color: var(--prize-color, var(--primary));
-    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2);
-}
-
-.prize-card.depleted {
-    opacity: 0.4;
-    pointer-events: none;
-}
-
-.prize-card.depleted::after {
-    content: '已抽完';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-15deg);
-    background: rgba(239, 68, 68, 0.9);
-    color: white;
-    padding: 5px 20px;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: 700;
-}
-
-.prize-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--bg-glass), var(--bg-card));
-    display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    flex-shrink: 0;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    align-items: center;
 }
 
-.prize-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-.prize-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.prize-level {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--prize-color, var(--gold));
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-}
-
-.prize-name {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.prize-count {
-    background: var(--bg-glass);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    flex-shrink: 0;
-}
-
-.prize-count .current {
-    color: var(--success);
-}
-
+/* ==========================================
+   抽奖机区域 - 新年风格
+   ========================================== */
 .lottery-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    width: 100%;
+    max-width: 600px;
 }
 
 .lottery-machine {
-    background: linear-gradient(180deg, #1a1a3e 0%, #0d0d1a 100%);
+    background: linear-gradient(180deg, rgba(153, 27, 27, 0.6) 0%, rgba(26, 5, 5, 0.9) 100%);
     border-radius: 30px;
-    padding: 30px;
+    padding: 35px;
     width: 100%;
-    max-width: 500px;
-    border: 2px solid rgba(102, 126, 234, 0.3);
+    border: 3px solid var(--gold);
     box-shadow: 
+        0 0 60px rgba(255, 215, 0, 0.3),
         0 20px 60px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        0 0 100px rgba(102, 126, 234, 0.1);
+        inset 0 1px 0 rgba(255, 215, 0, 0.2),
+        inset 0 -5px 30px rgba(0, 0, 0, 0.3);
     position: relative;
 }
 
+.lottery-machine::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
 .machine-top {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .light-strip {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
 }
 
 .light {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    background: var(--primary);
-    box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
-    animation: blink 1s ease-in-out infinite;
+    background: var(--gold);
+    box-shadow: 0 0 15px var(--gold), 0 0 30px rgba(255, 215, 0, 0.5);
+    animation: blink 0.8s ease-in-out infinite;
 }
 
-.light:nth-child(2) { animation-delay: 0.2s; }
-.light:nth-child(3) { animation-delay: 0.4s; }
-.light:nth-child(4) { animation-delay: 0.6s; }
-.light:nth-child(5) { animation-delay: 0.8s; }
+.light:nth-child(odd) { 
+    background: var(--red);
+    box-shadow: 0 0 15px var(--red), 0 0 30px rgba(220, 38, 38, 0.5);
+}
+
+.light:nth-child(1) { animation-delay: 0s; }
+.light:nth-child(2) { animation-delay: 0.1s; }
+.light:nth-child(3) { animation-delay: 0.2s; }
+.light:nth-child(4) { animation-delay: 0.3s; }
+.light:nth-child(5) { animation-delay: 0.4s; }
+.light:nth-child(6) { animation-delay: 0.5s; }
+.light:nth-child(7) { animation-delay: 0.6s; }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.9); }
 }
 
 .display-screen {
     background: #000;
     border-radius: 20px;
-    padding: 4px;
+    padding: 5px;
     margin-bottom: 25px;
-    border: 3px solid #333;
-    box-shadow: inset 0 5px 20px rgba(0, 0, 0, 0.5);
+    border: 4px solid var(--gold-dark);
+    box-shadow: 
+        inset 0 5px 30px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.2);
 }
 
 .screen-inner {
-    background: linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 100%);
+    background: linear-gradient(180deg, #1a0505 0%, #2d0a0a 100%);
     border-radius: 16px;
-    min-height: 150px;
+    min-height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -381,34 +344,34 @@ body {
         0deg,
         transparent,
         transparent 2px,
-        rgba(0, 0, 0, 0.1) 2px,
-        rgba(0, 0, 0, 0.1) 4px
+        rgba(255, 0, 0, 0.03) 2px,
+        rgba(255, 0, 0, 0.03) 4px
     );
     pointer-events: none;
 }
 
 .waiting-text {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.5rem;
-    color: var(--primary);
-    text-shadow: 0 0 20px var(--primary);
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 2rem;
+    color: var(--gold);
+    text-shadow: 0 0 30px var(--gold);
     animation: flicker 2s infinite;
 }
 
 @keyframes flicker {
     0%, 100% { opacity: 1; }
     92% { opacity: 1; }
-    93% { opacity: 0.3; }
+    93% { opacity: 0.5; }
     94% { opacity: 1; }
-    96% { opacity: 0.5; }
+    96% { opacity: 0.7; }
     97% { opacity: 1; }
 }
 
 .rolling-names {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 900;
     color: var(--gold);
-    text-shadow: 0 0 30px var(--gold);
+    text-shadow: 0 0 40px var(--gold), 0 0 80px rgba(255, 215, 0, 0.5);
     animation: roll-text 0.08s steps(1) infinite;
 }
 
@@ -421,7 +384,7 @@ body {
 }
 
 .rolling-names-multi span {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 900;
     color: var(--gold);
     text-shadow: 0 0 20px var(--gold);
@@ -459,121 +422,102 @@ body {
 }
 
 .winner-display .name {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: 900;
     background: linear-gradient(135deg, var(--gold), #fff, var(--gold));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: none;
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
 }
 
 .winner-display.multi .name {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     padding: 5px 12px;
-    background: linear-gradient(135deg, var(--gold), #fff, var(--gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .winner-display .prize {
-    font-size: 1rem;
-    color: var(--text-secondary);
+    font-size: 1.1rem;
+    color: var(--red-light);
     margin-top: 10px;
 }
 
-.prize-selector {
+/* 选择器样式 */
+.prize-selector,
+.draw-count-selector {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.prize-selector label {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
+.prize-selector label,
+.draw-count-selector label {
+    font-size: 1rem;
+    color: var(--gold);
+    font-weight: 500;
 }
 
 .prize-select {
-    background: var(--bg-glass);
-    border: 2px solid rgba(102, 126, 234, 0.3);
+    background: rgba(153, 27, 27, 0.5);
+    border: 2px solid var(--gold);
     border-radius: 12px;
     padding: 12px 20px;
     font-size: 1rem;
     color: var(--text-primary);
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 180px;
+    min-width: 200px;
     font-family: inherit;
 }
 
 .prize-select:hover, .prize-select:focus {
-    border-color: var(--primary);
+    border-color: var(--gold);
     outline: none;
-    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+    background: rgba(153, 27, 27, 0.7);
 }
 
 .prize-select option {
     background: var(--bg-dark);
     color: var(--text-primary);
-    padding: 10px;
 }
 
 .remaining {
-    font-size: 0.9rem;
-    color: var(--success);
+    font-size: 0.95rem;
+    color: var(--gold);
     font-weight: 600;
-    background: rgba(16, 185, 129, 0.1);
+    background: rgba(255, 215, 0, 0.15);
     padding: 8px 16px;
     border-radius: 20px;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    border: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 /* 抽取人数选择器 */
-.draw-count-selector {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 25px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.draw-count-selector label {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-}
-
 .count-input-group {
     display: flex;
     align-items: center;
-    background: var(--bg-glass);
-    border: 2px solid rgba(102, 126, 234, 0.3);
+    background: rgba(153, 27, 27, 0.5);
+    border: 2px solid var(--gold);
     border-radius: 12px;
     overflow: hidden;
 }
 
 .count-btn {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     background: transparent;
     border: none;
-    color: var(--text-primary);
-    font-size: 1.3rem;
+    color: var(--gold);
+    font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .count-btn:hover {
-    background: rgba(102, 126, 234, 0.3);
-    color: var(--gold);
+    background: rgba(255, 215, 0, 0.2);
 }
 
 .count-btn:active {
@@ -581,17 +525,17 @@ body {
 }
 
 .draw-count-input {
-    width: 50px;
-    height: 40px;
+    width: 60px;
+    height: 45px;
     background: transparent;
     border: none;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 215, 0, 0.3);
+    border-right: 1px solid rgba(255, 215, 0, 0.3);
     color: var(--gold);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     text-align: center;
-    font-family: 'Orbitron', monospace;
+    font-family: inherit;
     -moz-appearance: textfield;
 }
 
@@ -603,70 +547,22 @@ body {
 
 .draw-count-input:focus {
     outline: none;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(255, 215, 0, 0.1);
 }
 
 .count-hint {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-/* 多人中奖显示 */
-.winners-display {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.winner-name-item {
-    font-size: 1.8rem;
-    font-weight: 900;
+    font-size: 1rem;
     color: var(--gold);
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-    padding: 8px 20px;
-    background: rgba(255, 215, 0, 0.1);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    animation: winner-pop 0.5s ease-out backwards;
 }
 
-@keyframes winner-pop {
-    0% { opacity: 0; transform: scale(0.5); }
-    50% { transform: scale(1.1); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-/* 大奖多人名单 */
-.big-winners-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.big-winner-name-item {
-    font-size: 2.2rem;
-    font-weight: 900;
-    background: linear-gradient(90deg, var(--gold) 0%, #fff 25%, var(--gold) 50%, #fff 75%, var(--gold) 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gold-shine 2s linear infinite, winner-pop 0.5s ease-out backwards;
-    filter: drop-shadow(0 2px 10px rgba(255, 215, 0, 0.3));
-    padding: 5px 15px;
-}
-
+/* 抽奖按钮 - 新年风格 */
 .draw-button {
     width: 100%;
-    padding: 20px 40px;
-    font-size: 1.4rem;
+    padding: 22px 40px;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: white;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: var(--bg-dark);
+    background: linear-gradient(135deg, var(--gold) 0%, #f0c000 50%, var(--gold) 100%);
     border: none;
     border-radius: 16px;
     cursor: pointer;
@@ -675,11 +571,12 @@ body {
     transition: all 0.3s ease;
     font-family: inherit;
     letter-spacing: 4px;
+    box-shadow: 0 5px 30px rgba(255, 215, 0, 0.4);
 }
 
 .draw-button:hover:not(:disabled) {
     transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 15px 50px rgba(255, 215, 0, 0.5);
 }
 
 .draw-button:active:not(:disabled) {
@@ -700,11 +597,11 @@ body {
     background: linear-gradient(
         45deg,
         transparent 30%,
-        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.5) 50%,
         transparent 70%
     );
     transform: rotate(45deg);
-    animation: button-shine 3s infinite;
+    animation: button-shine 2.5s infinite;
 }
 
 @keyframes button-shine {
@@ -714,35 +611,39 @@ body {
 
 .draw-button.rolling {
     animation: pulse-button 0.5s ease-in-out infinite;
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    color: white;
 }
 
 @keyframes pulse-button {
-    0%, 100% { box-shadow: 0 0 20px var(--primary); }
-    50% { box-shadow: 0 0 40px var(--primary), 0 0 60px var(--secondary); }
+    0%, 100% { box-shadow: 0 0 30px var(--red); }
+    50% { box-shadow: 0 0 50px var(--red), 0 0 80px rgba(220, 38, 38, 0.5); }
 }
 
 .machine-base {
     margin-top: 20px;
-    height: 8px;
-    background: linear-gradient(90deg, transparent, var(--primary), transparent);
-    border-radius: 4px;
-    opacity: 0.5;
+    height: 6px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    border-radius: 3px;
+    opacity: 0.6;
 }
 
+/* 中奖卡片 */
 .current-winner {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
 }
 
 .winner-card {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-    border: 2px solid rgba(255, 215, 0, 0.3);
-    border-radius: 20px;
-    padding: 30px;
+    background: linear-gradient(135deg, rgba(153, 27, 27, 0.8) 0%, rgba(26, 5, 5, 0.9) 100%);
+    border: 3px solid var(--gold);
+    border-radius: 24px;
+    padding: 35px;
     text-align: center;
     position: relative;
     overflow: hidden;
     animation: winner-card-appear 0.5s ease-out;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
 }
 
 .winner-card.hidden {
@@ -755,158 +656,64 @@ body {
 }
 
 .winner-badge {
-    font-size: 1.2rem;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.5rem;
     color: var(--gold);
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     animation: bounce 0.6s ease infinite;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+    50% { transform: translateY(-8px); }
 }
 
-.winner-card .winner-name {
+/* 多人中奖显示 */
+.winners-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.winner-name-item {
     font-size: 2rem;
     font-weight: 900;
     color: var(--gold);
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-    margin-bottom: 10px;
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    padding: 10px 25px;
+    background: rgba(255, 215, 0, 0.15);
+    border-radius: 12px;
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    animation: winner-pop 0.5s ease-out backwards;
+}
+
+@keyframes winner-pop {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 .winner-card .winner-prize {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
+    font-size: 1.2rem;
+    color: var(--red-light);
 }
 
-.winners-section {
-    background: var(--bg-glass);
-    border-radius: 24px;
-    padding: 25px;
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    height: fit-content;
-    max-height: 650px;
-    display: flex;
-    flex-direction: column;
-}
-
-.winners-list {
-    flex: 1;
-    overflow-y: auto;
-    padding-right: 10px;
-}
-
-.winners-list::-webkit-scrollbar {
-    width: 6px;
-}
-
-.winners-list::-webkit-scrollbar-track {
-    background: var(--bg-card);
-    border-radius: 3px;
-}
-
-.winners-list::-webkit-scrollbar-thumb {
-    background: var(--gold);
-    border-radius: 3px;
-}
-
-.empty-list {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-}
-
-.winner-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 15px;
-    background: var(--bg-card);
-    border-radius: 12px;
-    margin-bottom: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    animation: slide-in 0.3s ease-out;
-    transition: all 0.3s ease;
-}
-
-.winner-item:hover {
-    background: var(--bg-glass);
-    border-color: rgba(255, 215, 0, 0.2);
-}
-
-@keyframes slide-in {
-    0% { opacity: 0; transform: translateX(20px); }
-    100% { opacity: 1; transform: translateX(0); }
-}
-
-.winner-rank {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-}
-
-.winner-rank.rank-1 {
-    background: linear-gradient(135deg, var(--gold), #f0c000);
-    color: #1a1a1a;
-}
-
-.winner-rank.rank-2 {
-    background: linear-gradient(135deg, var(--silver), #a0a0a0);
-    color: #1a1a1a;
-}
-
-.winner-rank.rank-3 {
-    background: linear-gradient(135deg, var(--bronze), #a06020);
-    color: #1a1a1a;
-}
-
-.winner-rank.rank-other {
-    background: var(--bg-glass);
-    color: var(--text-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.winner-details {
-    flex: 1;
-    min-width: 0;
-}
-
-.winner-item .winner-name {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 3px;
-}
-
-.winner-item .winner-prize {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-.winner-time {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    flex-shrink: 0;
-}
-
+/* ==========================================
+   底部区域
+   ========================================== */
 .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 30px;
-    background: var(--bg-glass);
+    padding: 20px 30px;
+    background: rgba(153, 27, 27, 0.4);
     border-radius: 20px;
-    margin-top: 30px;
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
     flex-wrap: wrap;
     gap: 20px;
 }
@@ -921,7 +728,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--text-secondary);
 }
 
@@ -930,17 +737,17 @@ body {
 }
 
 .info-item strong {
-    color: var(--text-primary);
-    font-size: 1.1rem;
+    color: var(--gold);
+    font-size: 1.2rem;
 }
 
 .reset-button {
     background: transparent;
-    border: 2px solid rgba(239, 68, 68, 0.5);
-    color: var(--danger);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    color: var(--gold);
     padding: 12px 25px;
     border-radius: 12px;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -951,18 +758,21 @@ body {
 }
 
 .reset-button:hover {
-    background: rgba(239, 68, 68, 0.1);
-    border-color: var(--danger);
+    background: rgba(255, 215, 0, 0.15);
+    border-color: var(--gold);
     transform: translateY(-2px);
 }
 
+/* ==========================================
+   全屏庆祝特效 - 新年风格
+   ========================================== */
 .celebration-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.92);
+    background: rgba(26, 5, 5, 0.95);
     z-index: 1000;
     display: none;
     align-items: center;
@@ -981,15 +791,14 @@ body {
     100% { opacity: 1; }
 }
 
-/* 庆祝背景光效 */
 .celebration-overlay::before {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, rgba(220, 38, 38, 0.1) 40%, transparent 70%);
     transform: translate(-50%, -50%);
     animation: celebration-glow 2s ease-in-out infinite;
 }
@@ -1001,20 +810,22 @@ body {
 
 .celebration-content {
     text-align: center;
+    z-index: 1;
 }
 
 .big-winner-card {
-    background: linear-gradient(135deg, #1a1a3e 0%, #0d0d1a 100%);
-    border: 3px solid var(--gold);
+    background: linear-gradient(135deg, rgba(153, 27, 27, 0.9) 0%, rgba(26, 5, 5, 0.95) 100%);
+    border: 4px solid var(--gold);
     border-radius: 30px;
     padding: 50px 60px;
     position: relative;
     animation: celebration-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     box-shadow: 
-        0 0 100px rgba(255, 215, 0, 0.3),
+        0 0 100px rgba(255, 215, 0, 0.4),
         0 25px 50px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        inset 0 1px 0 rgba(255, 215, 0, 0.2);
     overflow: visible;
+    max-width: 90vw;
 }
 
 @keyframes celebration-pop {
@@ -1029,51 +840,65 @@ body {
     left: -20px;
     right: -20px;
     bottom: -20px;
-    border: 3px solid transparent;
+    border: 4px solid transparent;
     border-radius: 35px;
     background: linear-gradient(var(--bg-dark), var(--bg-dark)) padding-box,
-                linear-gradient(45deg, var(--gold), var(--primary), var(--gold)) border-box;
-    animation: spin-slow 4s linear infinite;
+                linear-gradient(45deg, var(--gold), var(--red), var(--gold), var(--red)) border-box;
+    background-size: 400% 400%;
+    animation: sparkle-rotate 3s linear infinite;
     z-index: -1;
     pointer-events: none;
 }
 
-@keyframes spin-slow {
-    to { transform: rotate(360deg); }
+@keyframes sparkle-rotate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .winner-avatar {
-    font-size: 5rem;
+    font-size: 6rem;
     margin-bottom: 20px;
     animation: winner-avatar-bounce 0.8s ease infinite;
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
 }
 
 @keyframes winner-avatar-bounce {
     0%, 100% { transform: translateY(0) scale(1); }
-    25% { transform: translateY(-15px) scale(1.1); }
+    25% { transform: translateY(-20px) scale(1.1); }
     50% { transform: translateY(0) scale(1); }
-    75% { transform: translateY(-8px) scale(1.05); }
+    75% { transform: translateY(-10px) scale(1.05); }
 }
 
 .congrats-text {
-    font-size: 1.5rem;
-    color: var(--text-secondary);
-    margin-bottom: 10px;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 15px;
     animation: fade-in-up 0.4s ease-out 0.1s both;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
-.big-winner-name {
-    font-size: 3rem;
+/* 大奖多人名单 */
+.big-winners-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.big-winner-name-item {
+    font-size: 2.5rem;
     font-weight: 900;
     background: linear-gradient(90deg, var(--gold) 0%, #fff 25%, var(--gold) 50%, #fff 75%, var(--gold) 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 20px;
-    animation: gold-shine 2s linear infinite;
-    filter: drop-shadow(0 2px 10px rgba(255, 215, 0, 0.3));
+    animation: gold-shine 2s linear infinite, winner-pop 0.5s ease-out backwards;
+    filter: drop-shadow(0 2px 15px rgba(255, 215, 0, 0.5));
+    padding: 5px 15px;
 }
 
 @keyframes gold-shine {
@@ -1081,18 +906,18 @@ body {
 }
 
 .prize-won {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     color: var(--text-secondary);
     animation: fade-in-up 0.5s ease-out 0.3s both;
 }
 
 .prize-won .prize-name {
     display: block;
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--red-light);
     margin-top: 10px;
-    text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+    text-shadow: 0 0 20px rgba(254, 202, 202, 0.5);
 }
 
 @keyframes fade-in-up {
@@ -1104,15 +929,15 @@ body {
     margin-top: 30px;
     background: linear-gradient(135deg, var(--gold), #f0c000);
     border: none;
-    color: #1a1a1a;
-    padding: 15px 50px;
+    color: var(--bg-dark);
+    padding: 18px 60px;
     border-radius: 30px;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: inherit;
-    animation: fade-in-up 0.5s ease-out 0.5s both, button-pulse 2s ease-in-out 1s infinite;
+    animation: fade-in-up 0.5s ease-out 0.5s both, button-pulse-gold 2s ease-in-out 1s infinite;
     position: relative;
     overflow: hidden;
 }
@@ -1129,23 +954,23 @@ body {
     animation: button-shine 2s infinite;
 }
 
-@keyframes button-pulse {
-    0%, 100% { box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3); }
-    50% { box-shadow: 0 5px 30px rgba(255, 215, 0, 0.6); }
+@keyframes button-pulse-gold {
+    0%, 100% { box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4); }
+    50% { box-shadow: 0 5px 40px rgba(255, 215, 0, 0.7); }
 }
 
 .close-celebration:hover {
     transform: scale(1.05);
-    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 10px 50px rgba(255, 215, 0, 0.6);
 }
 
 /* AI歌曲播放区样式 */
 .song-section {
     margin-top: 25px;
     padding: 20px;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(255, 215, 0, 0.1);
     border-radius: 16px;
-    border: 1px solid rgba(102, 126, 234, 0.3);
+    border: 1px solid rgba(255, 215, 0, 0.3);
     animation: fade-in-up 0.5s ease-out 0.6s both;
 }
 
@@ -1160,7 +985,7 @@ body {
     gap: 10px;
     margin-bottom: 15px;
     font-size: 0.95rem;
-    color: var(--text-secondary);
+    color: var(--gold);
 }
 
 .song-status .status-icon {
@@ -1192,7 +1017,7 @@ body {
 }
 
 .song-lyrics {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     border-radius: 12px;
     padding: 15px 20px;
     margin-bottom: 15px;
@@ -1203,7 +1028,7 @@ body {
     white-space: pre-line;
     max-height: 150px;
     overflow-y: auto;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 .song-lyrics:empty {
@@ -1220,7 +1045,7 @@ body {
 }
 
 .song-lyrics::-webkit-scrollbar-thumb {
-    background: var(--primary);
+    background: var(--gold);
     border-radius: 3px;
 }
 
@@ -1261,12 +1086,17 @@ body {
 
 .play-btn:not(:disabled):hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 5px 20px rgba(34, 197, 94, 0.4);
 }
 
 .play-btn.playing {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--red), var(--red-dark));
     animation: pulse-glow 1s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 10px var(--red); }
+    50% { box-shadow: 0 0 25px var(--red); }
 }
 
 .stop-btn {
@@ -1280,13 +1110,13 @@ body {
 }
 
 .regenerate-btn {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 215, 0, 0.2);
+    color: var(--gold);
+    border: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 .regenerate-btn:not(:disabled):hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 215, 0, 0.3);
     transform: translateY(-2px);
 }
 
@@ -1302,7 +1132,7 @@ body {
 .audio-wave span {
     width: 3px;
     height: 100%;
-    background: var(--gold);
+    background: white;
     border-radius: 2px;
     animation: wave 0.5s ease-in-out infinite;
 }
@@ -1318,84 +1148,7 @@ body {
     50% { transform: scaleY(1); }
 }
 
-@media (max-width: 1200px) {
-    .main-content {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-
-    .prizes-section,
-    .winners-section {
-        max-height: none;
-    }
-
-    .lottery-section {
-        order: -1;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-    }
-
-    .title-text {
-        font-size: 2rem;
-        letter-spacing: 4px;
-    }
-
-    .title-sub {
-        font-size: 0.9rem;
-        letter-spacing: 6px;
-    }
-
-    .lottery-machine {
-        padding: 20px;
-    }
-
-    .draw-button {
-        padding: 15px 30px;
-        font-size: 1.2rem;
-    }
-
-    .footer {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .participants-info {
-        justify-content: center;
-    }
-
-    .big-winner-card {
-        padding: 30px 40px;
-        margin: 20px;
-    }
-
-    .big-winner-name {
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .title-text {
-        font-size: 1.5rem;
-    }
-
-    .prize-selector {
-        flex-direction: column;
-    }
-
-    .prize-select {
-        width: 100%;
-    }
-
-    .participants-info {
-        flex-direction: column;
-        gap: 15px;
-    }
-}
-
+/* 彩带效果 */
 .confetti {
     position: absolute;
     width: 10px;
@@ -1404,7 +1157,6 @@ body {
     pointer-events: none;
 }
 
-/* 全屏彩带效果 - 添加到body时 */
 body > .confetti {
     position: fixed;
     z-index: 1001;
@@ -1421,8 +1173,90 @@ body > .confetti {
     }
 }
 
+/* ==========================================
+   响应式设计
+   ========================================== */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .title-text {
+        font-size: 2.2rem;
+        letter-spacing: 4px;
+    }
+
+    .title-sub {
+        font-size: 0.9rem;
+        letter-spacing: 4px;
+    }
+
+    .lantern {
+        font-size: 2.5rem;
+    }
+
+    .lantern-left { left: 10px; }
+    .lantern-right { right: 10px; }
+
+    .lottery-machine {
+        padding: 25px;
+    }
+
+    .draw-button {
+        padding: 18px 30px;
+        font-size: 1.3rem;
+    }
+
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .participants-info {
+        justify-content: center;
+    }
+
+    .big-winner-card {
+        padding: 30px 25px;
+        margin: 15px;
+    }
+
+    .big-winner-name-item {
+        font-size: 1.8rem;
+    }
+
+    .winner-avatar {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title-text {
+        font-size: 1.8rem;
+    }
+
+    .prize-selector,
+    .draw-count-selector {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .prize-select {
+        width: 100%;
+    }
+
+    .participants-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .firework {
+        display: none;
+    }
+}
+
+/* 禁用选中 */
 .draw-button,
-.prize-card,
 .winner-card {
     user-select: none;
 }

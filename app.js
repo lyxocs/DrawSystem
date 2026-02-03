@@ -577,8 +577,9 @@ class LotterySystem {
     
     createConfetti(intense = false) {
         const container = this.elements.currentWinner;
-        const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8'];
-        const count = intense ? 20 : 10;
+        // 新年喜庆彩带颜色：红色、金色、橙色
+        const colors = ['#dc2626', '#ffd700', '#ef4444', '#f59e0b', '#fbbf24', '#b91c1c', '#ff6b6b', '#fef08a'];
+        const count = intense ? 25 : 12;
         
         for (let i = 0; i < count; i++) {
             const confetti = document.createElement('div');
@@ -706,6 +707,9 @@ class LotterySystem {
         const particles = [];
         const particleCount = 80;
         
+        // 新年喜庆色：红色和金色
+        const festiveColors = ['#dc2626', '#ffd700', '#ef4444', '#f59e0b', '#b91c1c'];
+        
         for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
@@ -714,7 +718,7 @@ class LotterySystem {
                 speedX: (Math.random() - 0.5) * 0.5,
                 speedY: (Math.random() - 0.5) * 0.5,
                 opacity: Math.random() * 0.5 + 0.2,
-                color: Math.random() > 0.5 ? '#667eea' : '#764ba2'
+                color: festiveColors[Math.floor(Math.random() * festiveColors.length)]
             });
         }
         

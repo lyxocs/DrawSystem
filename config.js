@@ -89,9 +89,9 @@ const PRIZES_CONFIG = [
 const SYSTEM_CONFIG = {
     animationDuration: 3000,
     showWeight: false,
-    eventName: "2026年度抽奖盛典",
-    primaryColor: "#667eea",
-    secondaryColor: "#764ba2"
+    eventName: "2026新年抽奖盛典",
+    primaryColor: "#dc2626",
+    secondaryColor: "#ffd700"
 };
 
 // AI歌曲生成配置

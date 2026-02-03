@@ -3,36 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抽奖系统 - 2026年度抽奖盛典</title>
+    <title>新年抽奖盛典 - 2026</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- 粒子背景 -->
     <canvas id="particles"></canvas>
     
+    <!-- 新年装饰元素 -->
+    <div class="festive-decorations">
+        <div class="lantern lantern-left">🏮</div>
+        <div class="lantern lantern-right">🏮</div>
+        <div class="firework firework-1">🎆</div>
+        <div class="firework firework-2">🎇</div>
+        <div class="firework firework-3">✨</div>
+    </div>
+    
     <div class="container">
+        <!-- 头部标题区 -->
         <header class="header">
             <div class="logo-container">
                 <div class="logo-glow"></div>
+                <div class="fortune-text">🧧 福 🧧</div>
                 <h1 class="title">
-                    <span class="title-text">2026年度抽奖盛典</span>
-                    <span class="title-sub">LUCKY DRAW</span>
+                    <span class="title-text">2026 新年抽奖盛典</span>
+                    <span class="title-sub">LUCKY DRAW · 蛇年大吉</span>
                 </h1>
             </div>
         </header>
 
-        <main class="main-content">
-            <section class="prizes-section">
-                <div class="section-header">
-                    <h2><span class="icon">🎁</span> 奖品展示</h2>
-                </div>
-                <div class="prizes-grid" id="prizesGrid"></div>
-            </section>
-
+        <!-- 主内容区 - 仅保留抽奖区 -->
+        <main class="main-content centered">
             <section class="lottery-section">
                 <div class="lottery-machine">
                     <div class="machine-top">
                         <div class="light-strip">
+                            <span class="light"></span>
+                            <span class="light"></span>
                             <span class="light"></span>
                             <span class="light"></span>
                             <span class="light"></span>
@@ -43,18 +51,18 @@
                     
                     <div class="display-screen">
                         <div class="screen-inner" id="displayScreen">
-                            <div class="waiting-text">准备抽奖</div>
+                            <div class="waiting-text">🎊 恭喜发财 🎊</div>
                         </div>
                     </div>
 
                     <div class="prize-selector">
-                        <label for="prizeSelect">选择奖项：</label>
+                        <label for="prizeSelect">🎁 选择奖项：</label>
                         <select id="prizeSelect" class="prize-select"></select>
                         <span class="remaining" id="remainingCount">剩余: 0</span>
                     </div>
 
                     <div class="draw-count-selector">
-                        <label for="drawCount">抽取人数：</label>
+                        <label for="drawCount">👥 抽取人数：</label>
                         <div class="count-input-group">
                             <button class="count-btn minus" id="countMinus">−</button>
                             <input type="number" id="drawCount" class="draw-count-input" value="1" min="1" max="10">
@@ -64,7 +72,7 @@
                     </div>
 
                     <button class="draw-button" id="drawButton">
-                        <span class="button-text">开始抽奖</span>
+                        <span class="button-text">🎰 开始抽奖</span>
                         <span class="button-glow"></span>
                     </button>
 
@@ -73,30 +81,21 @@
                     </div>
                 </div>
 
+                <!-- 中奖展示区 -->
                 <div class="current-winner" id="currentWinner">
                     <div class="winner-card hidden">
                         <div class="confetti-container"></div>
                         <div class="winner-content">
-                            <div class="winner-badge">🎉 恭喜中奖 🎉</div>
-                            <div class="winners-display" id="winnersDisplay">
-                                <!-- 多人中奖名单将由JS动态生成 -->
-                            </div>
+                            <div class="winner-badge">🧧 恭喜发财 大吉大利 🧧</div>
+                            <div class="winners-display" id="winnersDisplay"></div>
                             <div class="winner-prize" id="winnerPrize"></div>
                         </div>
                     </div>
                 </div>
             </section>
-
-            <section class="winners-section">
-                <div class="section-header">
-                    <h2><span class="icon">🏆</span> 中奖名单</h2>
-                </div>
-                <div class="winners-list" id="winnersList">
-                    <div class="empty-list">暂无中奖记录</div>
-                </div>
-            </section>
         </main>
 
+        <!-- 底部信息栏 -->
         <footer class="footer">
             <div class="participants-info">
                 <span class="info-item">
@@ -108,7 +107,7 @@
                     剩余人数: <strong id="remainingParticipants">0</strong>
                 </span>
                 <span class="info-item">
-                    <span class="info-icon">🎯</span>
+                    <span class="info-icon">🏆</span>
                     已中奖: <strong id="winnersCount">0</strong>
                 </span>
             </div>
@@ -118,18 +117,21 @@
         </footer>
     </div>
 
+    <!-- 隐藏的奖品和中奖列表容器(保持JS兼容) -->
+    <div id="prizesGrid" style="display:none;"></div>
+    <div id="winnersList" style="display:none;"></div>
+
+    <!-- 全屏中奖特效层 -->
     <div class="celebration-overlay" id="celebrationOverlay">
         <div class="celebration-content">
             <div class="big-winner-card">
                 <div class="sparkle-ring"></div>
-                <div class="winner-avatar" id="bigWinnerAvatar">🎊</div>
+                <div class="winner-avatar" id="bigWinnerAvatar">🧧</div>
                 <div class="winner-details">
-                    <div class="congrats-text">恭喜</div>
-                    <div class="big-winners-list" id="bigWinnersList">
-                        <!-- 多人大奖名单将由JS动态生成 -->
-                    </div>
+                    <div class="congrats-text">🎊 恭喜发财 🎊</div>
+                    <div class="big-winners-list" id="bigWinnersList"></div>
                     <div class="prize-won">
-                        <span>获得</span>
+                        <span>喜获</span>
                         <span class="prize-name" id="bigPrizeName"></span>
                     </div>
                 </div>
@@ -157,7 +159,7 @@
                     </div>
                 </div>
                 
-                <button class="close-celebration" id="closeCelebration">确认</button>
+                <button class="close-celebration" id="closeCelebration">🎉 太棒了</button>
             </div>
         </div>
     </div>
